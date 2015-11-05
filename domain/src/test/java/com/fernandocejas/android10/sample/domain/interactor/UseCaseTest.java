@@ -42,7 +42,9 @@ public class UseCaseTest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    this.useCase = new UseCaseTestClass(mockThreadExecutor, mockPostExecutionThread);
+    this.useCase = new UseCaseTestClass();
+    this.useCase.setThreadExecutor(mockThreadExecutor);
+    this.useCase.setPostExecutionThread(mockPostExecutionThread);
   }
 
   @Test
@@ -68,12 +70,6 @@ public class UseCaseTest {
   }
 
   private static class UseCaseTestClass extends UseCase {
-
-    protected UseCaseTestClass(
-        ThreadExecutor threadExecutor,
-        PostExecutionThread postExecutionThread) {
-      super(threadExecutor, postExecutionThread);
-    }
 
     @Override protected Observable buildUseCaseObservable() {
       return Observable.empty();

@@ -3,7 +3,6 @@ package com.fernandocejas.android10.sample.presentation.viewmodel;
 
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
-import android.util.Log;
 import android.view.View;
 
 import com.fernandocejas.android10.sample.data.dto.User;
@@ -13,6 +12,7 @@ import com.fernandocejas.android10.sample.domain.interactor.UseCase;
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
+import com.fernandocejas.android10.sample.presentation.navigation.Navigator;
 import com.fernandocejas.android10.sample.presentation.view.adapter.UsersAdapter;
 
 import java.util.Collection;
@@ -55,7 +55,7 @@ public class UserListViewModel extends LoadingViewModel {
 
 	@BindView
 	public void showMoreContent() {
-		//
+		// userAdapter
 	}
 
 	@Command
@@ -67,7 +67,6 @@ public class UserListViewModel extends LoadingViewModel {
 		getUserList.execute(new DefaultSubscriber<List<User>>() {
 			@Override
 			public void onNext(List<User> users) {
-				Log.v(TAG, "NEXTTTTTTTTTTTTTTTTTT");
 				Collection<UserModel> userModelsCollection = userModelDataMapper.transformUsers(users);
 				UsersAdapter usersAdapter = new UsersAdapter(AndroidApplication.getContext(), userModelsCollection);
 				usersAdapter.setOnItemClickListener(onUserItemClick());
@@ -76,7 +75,6 @@ public class UserListViewModel extends LoadingViewModel {
 
 			@Override
 			public void onError(Throwable e) {
-				Log.e(TAG, "ERRORRRRRRRRRRRRRRRRRRRRRRRRRRR");
 				showRetry();
 			}
 
@@ -89,6 +87,7 @@ public class UserListViewModel extends LoadingViewModel {
 			@Override
 			public void onClick(View v) {
 				loadUsersCommand();
+
 			}
 		};
 	}
@@ -97,7 +96,7 @@ public class UserListViewModel extends LoadingViewModel {
 		return new UsersAdapter.OnItemClickListener() {
 			@Override
 			public void onUserItemClicked(UserModel userModel) {
-
+				new Navigator().navigateToUserDetails(AndroidApplication.getInstance().getCurrentActivity(), userModel.getUserId());
 			}
 		};
 	}

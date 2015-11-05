@@ -16,6 +16,9 @@
 package com.fernandocejas.android10.sample.domain.interactor;
 
 
+import android.content.Context;
+
+import com.fernandocejas.android10.sample.data.repository.UserDataRepository;
 import com.fernandocejas.android10.sample.data.repository.UserRepository;
 
 import rx.Observable;
@@ -26,12 +29,32 @@ import rx.Observable;
  */
 public class GetUserDetails extends UseCase {
 
-	private final int userId;
-	private final UserRepository userRepository;
+	int userId;
+	UserRepository userRepository;
+
+	public GetUserDetails(Context appContext) {
+		this(0, new UserDataRepository(appContext));
+	}
+
+	public GetUserDetails(int userId, Context appContext) {
+		this(userId, new UserDataRepository(appContext));
+	}
 
 	public GetUserDetails(int userId, UserRepository userRepository) {
 		this.userId = userId;
 		this.userRepository = userRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	@Override

@@ -6,6 +6,7 @@
 package com.fernandocejas.android10.sample.presentation.view.adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +14,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
+import com.fernandocejas.android10.sample.presentation.RowUserBinding;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
 
 import java.util.Collection;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Adaptar that manages a collection of {@link UserModel}.
  */
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
+
+	private RowUserBinding rowUserBinding;
 
 	public interface OnItemClickListener {
 		void onUserItemClicked(UserModel userModel);
@@ -49,9 +51,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 
 	@Override
 	public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View view = this.layoutInflater.inflate(R.layout.row_user, parent, false);
-		UserViewHolder userViewHolder = new UserViewHolder(view);
-
+		rowUserBinding = DataBindingUtil.inflate(layoutInflater, R.layout.row_user, parent, false);
+		UserViewHolder userViewHolder = new UserViewHolder(rowUserBinding);
 		return userViewHolder;
 	}
 
@@ -91,12 +92,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 	}
 
 	static class UserViewHolder extends RecyclerView.ViewHolder {
-		@Bind(R.id.title)
 		TextView textViewTitle;
 
-		public UserViewHolder(View itemView) {
-			super(itemView);
-			ButterKnife.bind(this, itemView);
+		public UserViewHolder(RowUserBinding rowUserBinding) {
+			super(rowUserBinding.getRoot());
+			textViewTitle = rowUserBinding.title;
 		}
 	}
 }

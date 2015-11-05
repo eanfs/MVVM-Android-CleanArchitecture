@@ -6,6 +6,7 @@
 package com.fernandocejas.android10.sample.presentation.view.fragment;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,47 +15,29 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.fernandocejas.android10.sample.data.repository.UserDataRepository;
-import com.fernandocejas.android10.sample.domain.interactor.GetUserDetails;
-import com.fernandocejas.android10.sample.domain.interactor.UseCase;
-import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
+import com.fernandocejas.android10.sample.presentation.UserDetailsBinding;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
-import com.fernandocejas.android10.sample.presentation.presenter.UserDetailsPresenter;
 import com.fernandocejas.android10.sample.presentation.view.UserDetailsView;
 import com.fernandocejas.android10.sample.presentation.view.component.AutoLoadImageView;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import com.fernandocejas.android10.sample.presentation.viewmodel.UserDetailsViewModel;
 
 /**
  * Fragment that shows details of a certain user.
  */
-public class UserDetailsFragment extends BaseFragment implements UserDetailsView {
+public class UserDetailsFragment extends BaseFragment<UserDetailsViewModel, UserDetailsBinding> implements UserDetailsView {
 
 	private static final String ARGUMENT_KEY_USER_ID = "org.android10.ARGUMENT_USER_ID";
 
 	private int userId;
 
-	UserDetailsPresenter userDetailsPresenter;
-
-	@Bind(R.id.iv_cover)
 	AutoLoadImageView iv_cover;
-	@Bind(R.id.tv_fullname)
 	TextView tv_fullname;
-	@Bind(R.id.tv_email)
 	TextView tv_email;
-	@Bind(R.id.tv_followers)
 	TextView tv_followers;
-	@Bind(R.id.tv_description)
 	TextView tv_description;
-	@Bind(R.id.rl_progress)
 	RelativeLayout rl_progress;
-	@Bind(R.id.rl_retry)
 	RelativeLayout rl_retry;
-	@Bind(R.id.bt_retry)
 	Button bt_retry;
 
 	public UserDetailsFragment() {
@@ -76,10 +59,11 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 
-		View fragmentView = inflater.inflate(R.layout.fragment_user_details, container, false);
-		ButterKnife.bind(this, fragmentView);
+		setViewModel(new UserDetailsViewModel());
+		setBinding(DataBindingUtil.<UserDetailsBinding>inflate(inflater, R.layout.fragment_user_details, container, false));
+		getBinding().setViewModel(getViewModel());
 
-		return fragmentView;
+		return getBinding().getRoot();
 	}
 
 	@Override
@@ -91,37 +75,27 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
 	@Override
 	public void onResume() {
 		super.onResume();
-		this.userDetailsPresenter.resume();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		this.userDetailsPresenter.pause();
 	}
 
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		ButterKnife.unbind(this);
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		this.userDetailsPresenter.destroy();
 	}
 
 	private void initialize() {
 		this.userId = getArguments().getInt(ARGUMENT_KEY_USER_ID);
 
-		UseCase useCase = new GetUserDetails(userId, new UserDataRepository(AndroidApplication.getContext()));
-
-		userDetailsPresenter = new UserDetailsPresenter(useCase, new UserModelDataMapper());
-
-		this.userDetailsPresenter.setView(this);
-		this.userDetailsPresenter.initialize(this.userId);
-
+		getViewModel().loadUserDetailsCommand(userId);
 	}
 
 	@Override
@@ -171,12 +145,11 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
 	 * Loads all users.
 	 */
 	private void loadUserDetails() {
-		if (this.userDetailsPresenter != null) {
-			this.userDetailsPresenter.initialize(this.userId);
-		}
+//		if (this.userDetailsPresenter != null) {
+//			this.userDetailsPresenter.initialize(this.userId);
+//		}
 	}
 
-	@OnClick(R.id.bt_retry)
 	void onButtonRetryClick() {
 		UserDetailsFragment.this.loadUserDetails();
 	}

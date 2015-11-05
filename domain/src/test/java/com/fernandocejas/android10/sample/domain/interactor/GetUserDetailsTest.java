@@ -44,8 +44,10 @@ public class GetUserDetailsTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		getUserDetails = new GetUserDetails(FAKE_USER_ID, mockUserRepository,
-				mockThreadExecutor, mockPostExecutionThread);
+		getUserDetails = new GetUserDetails(FAKE_USER_ID, mockUserRepository);
+		getUserDetails.setThreadExecutor(mockThreadExecutor);
+		getUserDetails.setPostExecutionThread(mockPostExecutionThread);
+
 	}
 
 	@Test

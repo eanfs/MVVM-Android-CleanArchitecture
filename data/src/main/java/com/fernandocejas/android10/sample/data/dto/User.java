@@ -18,7 +18,7 @@ package com.fernandocejas.android10.sample.data.dto;
 /**
  * Class that represents a User in the domain layer.
  */
-public class User {
+public class User{
 
   private final int userId;
 

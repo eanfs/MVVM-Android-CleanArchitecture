@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data class="com.fernandocejas.android10.sample.presentation.RowUserBinding">
+
+    </data>
+<LinearLayout
     tools:ignore="UseCompoundDrawables"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,9 +30,12 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:textSize="@dimen/lv_row_text_size"
+      android:textColor="@android:color/black"
       android:gravity="center_vertical"
       android:singleLine="true"
       android:ellipsize="end"
       />
 
 </LinearLayout>
+
+</layout>
