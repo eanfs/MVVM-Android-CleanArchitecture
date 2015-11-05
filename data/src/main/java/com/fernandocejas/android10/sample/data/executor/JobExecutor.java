@@ -15,7 +15,6 @@
  */
 package com.fernandocejas.android10.sample.data.executor;
 
-import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

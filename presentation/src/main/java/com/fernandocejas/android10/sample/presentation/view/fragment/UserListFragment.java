@@ -7,45 +7,27 @@ package com.fernandocejas.android10.sample.presentation.view.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 
-import com.fernandocejas.android10.sample.data.cache.FileManager;
-import com.fernandocejas.android10.sample.data.cache.UserCache;
-import com.fernandocejas.android10.sample.data.cache.UserCacheImpl;
-import com.fernandocejas.android10.sample.data.cache.serializer.JsonSerializer;
-import com.fernandocejas.android10.sample.data.entity.mapper.UserEntityDataMapper;
-import com.fernandocejas.android10.sample.data.executor.JobExecutor;
-import com.fernandocejas.android10.sample.data.repository.UserDataRepository;
-import com.fernandocejas.android10.sample.data.repository.datasource.UserDataStoreFactory;
-import com.fernandocejas.android10.sample.domain.interactor.GetUserList;
-import com.fernandocejas.android10.sample.domain.interactor.UseCase;
-import com.fernandocejas.android10.sample.domain.repository.UserRepository;
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.UIThread;
-import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
+import com.fernandocejas.android10.sample.presentation.UserListBinding;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
-import com.fernandocejas.android10.sample.presentation.presenter.UserListPresenter;
 import com.fernandocejas.android10.sample.presentation.view.UserListView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.UsersAdapter;
 import com.fernandocejas.android10.sample.presentation.view.adapter.UsersLayoutManager;
+import com.fernandocejas.android10.sample.presentation.viewmodel.UserListViewModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 /**
  * Fragment that shows a list of Users.
  */
-public class UserListFragment extends BaseFragment implements UserListView {
+public class UserListFragment extends BaseFragment<UserListViewModel, UserListBinding> implements UserListView {
 
 	/**
 	 * Interface for listening user list events.
@@ -53,17 +35,6 @@ public class UserListFragment extends BaseFragment implements UserListView {
 	public interface UserListListener {
 		void onUserClicked(final UserModel userModel);
 	}
-
-	UserListPresenter userListPresenter;
-
-	@Bind(R.id.rv_users)
-	RecyclerView rv_users;
-	@Bind(R.id.rl_progress)
-	RelativeLayout rl_progress;
-	@Bind(R.id.rl_retry)
-	RelativeLayout rl_retry;
-	@Bind(R.id.bt_retry)
-	Button bt_retry;
 
 	private UsersAdapter usersAdapter;
 	private UsersLayoutManager usersLayoutManager;
@@ -86,83 +57,65 @@ public class UserListFragment extends BaseFragment implements UserListView {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 
-		View fragmentView = inflater.inflate(R.layout.fragment_user_list, container, true);
-		ButterKnife.bind(this, fragmentView);
+		setViewModel(new UserListViewModel());
+		setBinding(DataBindingUtil.<UserListBinding>inflate(inflater, R.layout.fragment_user_list, container, true));
+		getBinding().setViewModel(getViewModel());
+
 		setupUI();
 
-		return fragmentView;
+		return getBinding().getRoot();
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		this.initialize();
-		this.loadUserList();
+		getViewModel().loadUsersCommand();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		this.userListPresenter.resume();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		this.userListPresenter.pause();
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		this.userListPresenter.destroy();
 	}
 
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		ButterKnife.unbind(this);
 	}
 
-	private void initialize() {
-		UserCache userCache = new UserCacheImpl(getContext(), new JsonSerializer(), new FileManager(), new JobExecutor());
-		UserDataStoreFactory userDataStoreFactory = new UserDataStoreFactory(getContext(), userCache);
-		UserRepository userRepository = new UserDataRepository(userDataStoreFactory, new UserEntityDataMapper());
-		UseCase useCase = new GetUserList(userRepository, new JobExecutor(), new UIThread());
-		userListPresenter = new UserListPresenter(useCase, new UserModelDataMapper());
-
-		this.userListPresenter.setView(this);
-	}
 
 	private void setupUI() {
 		this.usersLayoutManager = new UsersLayoutManager(getActivity());
-		this.rv_users.setLayoutManager(usersLayoutManager);
+		getBinding().rvUsers.setLayoutManager(usersLayoutManager);
 
 		this.usersAdapter = new UsersAdapter(getActivity(), new ArrayList<UserModel>());
 		this.usersAdapter.setOnItemClickListener(onItemClickListener);
-		this.rv_users.setAdapter(usersAdapter);
+		getBinding().rvUsers.setAdapter(usersAdapter);
 	}
 
 	@Override
 	public void showLoading() {
-		this.rl_progress.setVisibility(View.VISIBLE);
-		this.getActivity().setProgressBarIndeterminateVisibility(true);
 	}
 
 	@Override
 	public void hideLoading() {
-		this.rl_progress.setVisibility(View.GONE);
-		this.getActivity().setProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override
 	public void showRetry() {
-		this.rl_retry.setVisibility(View.VISIBLE);
 	}
 
 	@Override
 	public void hideRetry() {
-		this.rl_retry.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -193,10 +146,8 @@ public class UserListFragment extends BaseFragment implements UserListView {
 	 * Loads all users.
 	 */
 	private void loadUserList() {
-		this.userListPresenter.initialize();
 	}
 
-	@OnClick(R.id.bt_retry)
 	void onButtonRetryClick() {
 		UserListFragment.this.loadUserList();
 	}
@@ -205,9 +156,9 @@ public class UserListFragment extends BaseFragment implements UserListView {
 			new UsersAdapter.OnItemClickListener() {
 				@Override
 				public void onUserItemClicked(UserModel userModel) {
-					if (UserListFragment.this.userListPresenter != null && userModel != null) {
-						UserListFragment.this.userListPresenter.onUserClicked(userModel);
-					}
+//					if (UserListFragment.this.userListPresenter != null && userModel != null) {
+//						UserListFragment.this.userListPresenter.onUserClicked(userModel);
+//					}
 				}
 			};
 }

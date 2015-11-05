@@ -38,7 +38,6 @@ dependencies {
   def dataDependencies = rootProject.ext.dataDependencies
   def testDependencies = rootProject.ext.dataTestDependencies
 
-  compile project(':domain')
   compile dataDependencies.okHttp
   compile dataDependencies.gson
   compile dataDependencies.rxJava

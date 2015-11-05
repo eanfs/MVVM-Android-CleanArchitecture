@@ -20,7 +20,8 @@ import android.content.Context;
 import com.fernandocejas.android10.sample.data.cache.serializer.JsonSerializer;
 import com.fernandocejas.android10.sample.data.entity.UserEntity;
 import com.fernandocejas.android10.sample.data.exception.UserNotFoundException;
-import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
+import com.fernandocejas.android10.sample.data.executor.JobExecutor;
+import com.fernandocejas.android10.sample.data.executor.ThreadExecutor;
 
 import java.io.File;
 
@@ -40,16 +41,27 @@ public class UserCacheImpl implements UserCache {
 
 	private final Context context;
 	private final File cacheDir;
-	private final JsonSerializer serializer;
-	private final FileManager fileManager;
-	private final ThreadExecutor threadExecutor;
+	private  JsonSerializer serializer;
+	private  FileManager fileManager;
+	private ThreadExecutor threadExecutor;
+
+	/**
+	 * Constructor of the class {@link UserCacheImpl}.
+	 * <p/>
+	 * <p/>
+	 * UserCacheSerializer {@link JsonSerializer} for object serialization.
+	 * {@link FileManager} for saving serialized objects to the file system.
+	 */
+	public UserCacheImpl(Context applicationContext) {
+		this(applicationContext, new JsonSerializer(), new FileManager(), new JobExecutor());
+	}
 
 	/**
 	 * Constructor of the class {@link UserCacheImpl}.
 	 *
-	 * @param context A
+	 * @param context             A
 	 * @param userCacheSerializer {@link JsonSerializer} for object serialization.
-	 * @param fileManager {@link FileManager} for saving serialized objects to the file system.
+	 * @param fileManager         {@link FileManager} for saving serialized objects to the file system.
 	 */
 	public UserCacheImpl(Context context, JsonSerializer userCacheSerializer,
 	                     FileManager fileManager, ThreadExecutor executor) {
@@ -61,6 +73,18 @@ public class UserCacheImpl implements UserCache {
 		this.serializer = userCacheSerializer;
 		this.fileManager = fileManager;
 		this.threadExecutor = executor;
+	}
+
+	public void setSerializer(JsonSerializer serializer) {
+		this.serializer = serializer;
+	}
+
+	public void setFileManager(FileManager fileManager) {
+		this.fileManager = fileManager;
+	}
+
+	public void setThreadExecutor(ThreadExecutor threadExecutor) {
+		this.threadExecutor = threadExecutor;
 	}
 
 	@Override

@@ -1,31 +1,33 @@
 package com.fernandocejas.android10.sample.presentation.view.activity;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.widget.Button;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+
+import com.fernandocejas.android10.sample.presentation.HomeBinding;
 import com.fernandocejas.android10.sample.presentation.R;
+import com.fernandocejas.android10.sample.presentation.viewmodel.HomeViewModel;
 
 /**
  * Main application screen. This is the app entry point.
  */
-public class MainActivity extends BaseActivity {
-
-  @Bind(R.id.btn_LoadData) Button btn_LoadData;
+public class MainActivity extends BaseActivity<HomeViewModel, HomeBinding> {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    ButterKnife.bind(this);
+
+    setViewModel(new HomeViewModel());
+    setBinding(DataBindingUtil.<HomeBinding>setContentView(this, R.layout.home_activity));
+    getBinding().setViewModel(getViewModel());
+
+    initWidget();
   }
 
-  /**
-   * Goes to the user list screen.
-   */
-  @OnClick(R.id.btn_LoadData)
-  void navigateToUserList() {
-    this.navigator.navigateToUserList(this);
+  private void initWidget() {
+    getBinding().linkTv.setText(Html.fromHtml(getResources().getString(R.string.url)));
+    getBinding().linkTv.setMovementMethod(LinkMovementMethod.getInstance());
   }
+
 }

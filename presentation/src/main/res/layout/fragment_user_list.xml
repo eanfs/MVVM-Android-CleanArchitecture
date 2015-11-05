@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data class="com.fernandocejas.android10.sample.presentation.UserListBinding">
+
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.fernandocejas.android10.sample.presentation.viewmodel.UserListViewModel"/>
+    </data>
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -9,14 +20,20 @@
       android:scrollbars="vertical"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      bind:visibility="@{viewModel.showContentList?View.VISIBLE:View.GONE}"
+      bind:adapter="@{viewModel.usersListAdapter}"
       />
 
   <include
       layout="@layout/view_progress"
+      bind:viewModel="@{viewModel}"
       />
 
   <include
       layout="@layout/view_retry"
+      bind:viewModel="@{viewModel}"
       />
 
 </RelativeLayout>
+
+</layout>

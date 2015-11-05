@@ -15,25 +15,21 @@
  */
 package com.fernandocejas.android10.sample.domain.interactor;
 
-import com.fernandocejas.android10.sample.domain.User;
-import com.fernandocejas.android10.sample.domain.executor.PostExecutionThread;
-import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
-import com.fernandocejas.android10.sample.domain.repository.UserRepository;
+
+import com.fernandocejas.android10.sample.data.repository.UserRepository;
 
 import rx.Observable;
 
 /**
  * This class is an implementation of {@link UseCase} that represents a use case for
- * retrieving data related to an specific {@link User}.
+ * retrieving data related to an specific {@link com.fernandocejas.android10.sample.data.dto.User}.
  */
 public class GetUserDetails extends UseCase {
 
 	private final int userId;
 	private final UserRepository userRepository;
 
-	public GetUserDetails(int userId, UserRepository userRepository,
-	                      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-		super(threadExecutor, postExecutionThread);
+	public GetUserDetails(int userId, UserRepository userRepository) {
 		this.userId = userId;
 		this.userRepository = userRepository;
 	}

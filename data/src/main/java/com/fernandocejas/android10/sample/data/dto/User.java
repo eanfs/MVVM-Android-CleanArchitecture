@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fernandocejas.android10.sample.domain;
+package com.fernandocejas.android10.sample.data.dto;
 
 /**
  * Class that represents a User in the domain layer.

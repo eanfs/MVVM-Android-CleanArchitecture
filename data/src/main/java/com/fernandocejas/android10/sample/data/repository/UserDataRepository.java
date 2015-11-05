@@ -15,12 +15,13 @@
  */
 package com.fernandocejas.android10.sample.data.repository;
 
+import android.content.Context;
+
+import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.data.entity.UserEntity;
 import com.fernandocejas.android10.sample.data.entity.mapper.UserEntityDataMapper;
 import com.fernandocejas.android10.sample.data.repository.datasource.UserDataStore;
 import com.fernandocejas.android10.sample.data.repository.datasource.UserDataStoreFactory;
-import com.fernandocejas.android10.sample.domain.User;
-import com.fernandocejas.android10.sample.domain.repository.UserRepository;
 
 import java.util.List;
 
@@ -32,8 +33,12 @@ import rx.functions.Func1;
  */
 public class UserDataRepository implements UserRepository {
 
-	private final UserDataStoreFactory userDataStoreFactory;
-	private final UserEntityDataMapper userEntityDataMapper;
+	private UserDataStoreFactory userDataStoreFactory;
+	private UserEntityDataMapper userEntityDataMapper;
+
+	public UserDataRepository(Context appContext) {
+		this(new UserDataStoreFactory(appContext), new UserEntityDataMapper());
+	}
 
 	/**
 	 * Constructs a {@link UserRepository}.
@@ -44,6 +49,14 @@ public class UserDataRepository implements UserRepository {
 	public UserDataRepository(UserDataStoreFactory dataStoreFactory,
 	                          UserEntityDataMapper userEntityDataMapper) {
 		this.userDataStoreFactory = dataStoreFactory;
+		this.userEntityDataMapper = userEntityDataMapper;
+	}
+
+	public void setUserDataStoreFactory(UserDataStoreFactory userDataStoreFactory) {
+		this.userDataStoreFactory = userDataStoreFactory;
+	}
+
+	public void setUserEntityDataMapper(UserEntityDataMapper userEntityDataMapper) {
 		this.userEntityDataMapper = userEntityDataMapper;
 	}
 

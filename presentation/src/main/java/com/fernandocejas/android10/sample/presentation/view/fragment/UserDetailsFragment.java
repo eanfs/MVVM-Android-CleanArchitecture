@@ -14,19 +14,11 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.fernandocejas.android10.sample.data.cache.FileManager;
-import com.fernandocejas.android10.sample.data.cache.UserCache;
-import com.fernandocejas.android10.sample.data.cache.UserCacheImpl;
-import com.fernandocejas.android10.sample.data.cache.serializer.JsonSerializer;
-import com.fernandocejas.android10.sample.data.entity.mapper.UserEntityDataMapper;
-import com.fernandocejas.android10.sample.data.executor.JobExecutor;
 import com.fernandocejas.android10.sample.data.repository.UserDataRepository;
-import com.fernandocejas.android10.sample.data.repository.datasource.UserDataStoreFactory;
 import com.fernandocejas.android10.sample.domain.interactor.GetUserDetails;
 import com.fernandocejas.android10.sample.domain.interactor.UseCase;
-import com.fernandocejas.android10.sample.domain.repository.UserRepository;
+import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.UIThread;
 import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
 import com.fernandocejas.android10.sample.presentation.presenter.UserDetailsPresenter;
@@ -123,10 +115,7 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
 	private void initialize() {
 		this.userId = getArguments().getInt(ARGUMENT_KEY_USER_ID);
 
-		UserCache userCache = new UserCacheImpl(getContext(), new JsonSerializer(), new FileManager(), new JobExecutor());
-		UserDataStoreFactory userDataStoreFactory = new UserDataStoreFactory(getContext(), userCache);
-		UserRepository userRepository = new UserDataRepository(userDataStoreFactory, new UserEntityDataMapper());
-		UseCase useCase = new GetUserDetails(userId, userRepository, new JobExecutor(), new UIThread());
+		UseCase useCase = new GetUserDetails(userId, new UserDataRepository(AndroidApplication.getContext()));
 
 		userDetailsPresenter = new UserDetailsPresenter(useCase, new UserModelDataMapper());
 

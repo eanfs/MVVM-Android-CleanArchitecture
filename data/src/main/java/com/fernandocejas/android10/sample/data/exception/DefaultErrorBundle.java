@@ -13,29 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fernandocejas.android10.sample.domain;
+package com.fernandocejas.android10.sample.data.exception;
 
-import org.junit.Before;
-import org.junit.Test;
+/**
+ *  Wrapper around Exceptions used to manage default errors.
+ */
+public class DefaultErrorBundle implements ErrorBundle {
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+  private static final String DEFAULT_ERROR_MSG = "Unknown error";
 
-public class UserTest {
+  private final Exception exception;
 
-  private static final int FAKE_USER_ID = 8;
-
-  private User user;
-
-  @Before
-  public void setUp() {
-    user = new User(FAKE_USER_ID);
+  public DefaultErrorBundle(Exception exception) {
+    this.exception = exception;
   }
 
-  @Test
-  public void testUserConstructorHappyCase() {
-    int userId = user.getUserId();
+  @Override
+  public Exception getException() {
+    return exception;
+  }
 
-    assertThat(userId, is(FAKE_USER_ID));
+  @Override
+  public String getErrorMessage() {
+    return (exception != null) ? this.exception.getMessage() : DEFAULT_ERROR_MSG;
   }
 }

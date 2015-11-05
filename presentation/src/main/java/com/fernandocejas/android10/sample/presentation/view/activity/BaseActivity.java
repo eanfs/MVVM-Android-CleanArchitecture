@@ -3,20 +3,63 @@ package com.fernandocejas.android10.sample.presentation.view.activity;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
+import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.navigation.Navigator;
+import com.fernandocejas.android10.sample.presentation.viewmodel.ViewModel;
 
 /**
  * Base {@link android.app.Activity} class for every Activity in this application.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity<VM extends ViewModel, B extends ViewDataBinding> extends Activity {
 
   Navigator navigator = new Navigator();
+
+  private VM viewModel;
+  private B binding;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+
+    AndroidApplication.getInstance().setCurrentActivity(this);
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+
+    clearReferences();
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+
+    clearReferences();
+  }
+
+  @Override
+  protected void onRestart() {
+    super.onRestart();
   }
 
   /**
@@ -31,4 +74,32 @@ public abstract class BaseActivity extends Activity {
     fragmentTransaction.commit();
   }
 
+  public void setViewModel(@NonNull VM viewModel) {
+    this.viewModel = viewModel;
+  }
+
+  public VM getViewModel() {
+    if (viewModel == null) {
+      throw new NullPointerException("You should setViewModel first!");
+    }
+    return viewModel;
+  }
+
+  public void setBinding(@NonNull B binding) {
+    this.binding = binding;
+  }
+
+  public B getBinding() {
+    if (binding == null) {
+      throw new NullPointerException("You should setBinding first!");
+    }
+    return binding;
+  }
+
+
+  private void clearReferences(){
+    Activity currActivity = AndroidApplication.getInstance().getCurrentActivity();
+    if (this.equals(currActivity))
+      AndroidApplication.getInstance().setCurrentActivity(null);
+  }
 }

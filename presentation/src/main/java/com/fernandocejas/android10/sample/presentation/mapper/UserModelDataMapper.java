@@ -15,8 +15,9 @@
  */
 package com.fernandocejas.android10.sample.presentation.mapper;
 
-import com.fernandocejas.android10.sample.domain.User;
+import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class UserModelDataMapper {
    * @param user Object to be transformed.
    * @return {@link UserModel}.
    */
-  public UserModel transform(User user) {
+  public UserModel transformUser(User user) {
     if (user == null) {
       throw new IllegalArgumentException("Cannot transform a null value");
     }
@@ -55,13 +56,13 @@ public class UserModelDataMapper {
    * @param usersCollection Objects to be transformed.
    * @return List of {@link UserModel}.
    */
-  public Collection<UserModel> transform(Collection<User> usersCollection) {
+  public Collection<UserModel> transformUsers(Collection<User> usersCollection) {
     Collection<UserModel> userModelsCollection;
 
     if (usersCollection != null && !usersCollection.isEmpty()) {
       userModelsCollection = new ArrayList<>();
       for (User user : usersCollection) {
-        userModelsCollection.add(transform(user));
+        userModelsCollection.add(transformUser(user));
       }
     } else {
       userModelsCollection = Collections.emptyList();

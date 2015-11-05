@@ -15,9 +15,10 @@
  */
 package com.fernandocejas.android10.sample.domain.interactor;
 
-import com.fernandocejas.android10.sample.domain.executor.PostExecutionThread;
-import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
-import com.fernandocejas.android10.sample.domain.repository.UserRepository;
+import com.fernandocejas.android10.sample.data.executor.PostExecutionThread;
+import com.fernandocejas.android10.sample.data.executor.ThreadExecutor;
+import com.fernandocejas.android10.sample.data.repository.UserRepository;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

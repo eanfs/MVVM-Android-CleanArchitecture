@@ -13,28 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fernandocejas.android10.sample.domain.exception;
+package com.fernandocejas.android10.sample.data.exception;
 
 /**
- *  Wrapper around Exceptions used to manage default errors.
+ * Interface to represent a wrapper around an {@link Exception} to manage errors.
  */
-public class DefaultErrorBundle implements ErrorBundle {
+public interface ErrorBundle {
+  Exception getException();
 
-  private static final String DEFAULT_ERROR_MSG = "Unknown error";
-
-  private final Exception exception;
-
-  public DefaultErrorBundle(Exception exception) {
-    this.exception = exception;
-  }
-
-  @Override
-  public Exception getException() {
-    return exception;
-  }
-
-  @Override
-  public String getErrorMessage() {
-    return (exception != null) ? this.exception.getMessage() : DEFAULT_ERROR_MSG;
-  }
+  String getErrorMessage();
 }

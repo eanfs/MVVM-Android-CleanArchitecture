@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.android.databinding'
 
 android {
   def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -61,7 +62,6 @@ dependencies {
   def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
   compile project(':domain')
-  compile project(':data')
 
   compile presentationDependencies.butterKnife
   compile presentationDependencies.recyclerView

@@ -13,25 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fernandocejas.android10.sample.domain.repository;
+package com.fernandocejas.android10.sample.data.executor;
 
-import com.fernandocejas.android10.sample.domain.User;
-import java.util.List;
-import rx.Observable;
+import java.util.concurrent.Executor;
 
 /**
- * Interface that represents a Repository for getting {@link User} related data.
+ * Executor implementation can be based on different frameworks or techniques of asynchronous
+ * execution, but every implementation will execute the
+ * {@link com.fernandocejas.android10.sample.domain.interactor.UseCase} out of the UI thread.
  */
-public interface UserRepository {
-  /**
-   * Get an {@link rx.Observable} which will emit a List of {@link User}.
-   */
-  Observable<List<User>> users();
-
-  /**
-   * Get an {@link rx.Observable} which will emit a {@link User}.
-   *
-   * @param userId The user id used to retrieve user data.
-   */
-  Observable<User> user(final int userId);
-}
+public interface ThreadExecutor extends Executor {}

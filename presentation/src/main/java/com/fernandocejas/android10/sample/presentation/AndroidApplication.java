@@ -15,16 +15,39 @@
  */
 package com.fernandocejas.android10.sample.presentation;
 
+import android.app.Activity;
 import android.app.Application;
+import android.support.annotation.NonNull;
 
 /**
  * Android Main Application
  */
 public class AndroidApplication extends Application {
 
+	private static AndroidApplication instance;
+
+	private Activity mCurrentActivity;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		instance = this;
+	}
+
+	public static AndroidApplication getContext() {
+		return instance;
+	}
+
+	public static AndroidApplication getInstance() {
+		return instance;
+	}
+
+	public Activity getCurrentActivity() {
+		return mCurrentActivity;
+	}
+
+	public void setCurrentActivity(@NonNull Activity mCurrentActivity) {
+		this.mCurrentActivity = mCurrentActivity;
 	}
 
 }

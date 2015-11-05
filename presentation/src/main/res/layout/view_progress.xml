@@ -1,8 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.fernandocejas.android10.sample.presentation.viewmodel.LoadingViewModel"/>
+
+    </data>
+
+<RelativeLayout
     android:id="@+id/rl_progress"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="gone"
+    bind:visibility="@{viewModel.showLoading?View.VISIBLE:View.GONE}"
     >
 
   <ProgressBar
@@ -11,3 +24,4 @@
       />
 
 </RelativeLayout>
+</layout>

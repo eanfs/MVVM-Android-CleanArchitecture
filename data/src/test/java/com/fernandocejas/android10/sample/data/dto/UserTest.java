@@ -13,13 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fernandocejas.android10.sample.domain.exception;
+package com.fernandocejas.android10.sample.data.dto;
 
-/**
- * Interface to represent a wrapper around an {@link java.lang.Exception} to manage errors.
- */
-public interface ErrorBundle {
-  Exception getException();
+import org.junit.Before;
+import org.junit.Test;
 
-  String getErrorMessage();
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
+public class UserTest {
+
+  private static final int FAKE_USER_ID = 8;
+
+  private User user;
+
+  @Before
+  public void setUp() {
+    user = new User(FAKE_USER_ID);
+  }
+
+  @Test
+  public void testUserConstructorHappyCase() {
+    int userId = user.getUserId();
+
+    assertThat(userId, is(FAKE_USER_ID));
+  }
 }

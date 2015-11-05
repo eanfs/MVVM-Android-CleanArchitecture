@@ -15,10 +15,12 @@
  */
 package com.fernandocejas.android10.sample.domain.interactor;
 
-import com.fernandocejas.android10.sample.domain.User;
-import com.fernandocejas.android10.sample.domain.executor.PostExecutionThread;
-import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
-import com.fernandocejas.android10.sample.domain.repository.UserRepository;
+
+import android.content.Context;
+
+import com.fernandocejas.android10.sample.data.dto.User;
+import com.fernandocejas.android10.sample.data.repository.UserDataRepository;
+import com.fernandocejas.android10.sample.data.repository.UserRepository;
 
 import rx.Observable;
 
@@ -28,11 +30,17 @@ import rx.Observable;
  */
 public class GetUserList extends UseCase {
 
-	private final UserRepository userRepository;
+	UserRepository userRepository;
 
-	public GetUserList(UserRepository userRepository, ThreadExecutor threadExecutor,
-	                   PostExecutionThread postExecutionThread) {
-		super(threadExecutor, postExecutionThread);
+	public GetUserList(Context appContext) {
+		this(new UserDataRepository(appContext));
+	}
+
+	public GetUserList(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 

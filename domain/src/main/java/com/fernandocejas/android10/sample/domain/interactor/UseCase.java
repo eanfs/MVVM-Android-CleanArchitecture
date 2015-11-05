@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Fernando Cejas Open Source Project
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,10 +15,13 @@
  */
 package com.fernandocejas.android10.sample.domain.interactor;
 
-import com.fernandocejas.android10.sample.domain.executor.PostExecutionThread;
-import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
-import rx.Subscriber;
+import com.fernandocejas.android10.sample.data.executor.JobExecutor;
+import com.fernandocejas.android10.sample.data.executor.PostExecutionThread;
+import com.fernandocejas.android10.sample.data.executor.ThreadExecutor;
+import com.fernandocejas.android10.sample.data.executor.UIThread;
+
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
@@ -33,41 +36,44 @@ import rx.subscriptions.Subscriptions;
  */
 public abstract class UseCase {
 
-  private final ThreadExecutor threadExecutor;
-  private final PostExecutionThread postExecutionThread;
+	ThreadExecutor threadExecutor = new JobExecutor();
+	PostExecutionThread postExecutionThread = new UIThread();
 
-  private Subscription subscription = Subscriptions.empty();
+	private Subscription subscription = Subscriptions.empty();
 
-  protected UseCase(ThreadExecutor threadExecutor,
-      PostExecutionThread postExecutionThread) {
-    this.threadExecutor = threadExecutor;
-    this.postExecutionThread = postExecutionThread;
-  }
 
-  /**
-   * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
-   */
-  protected abstract Observable buildUseCaseObservable();
+	public void setThreadExecutor(ThreadExecutor threadExecutor) {
+		this.threadExecutor = threadExecutor;
+	}
 
-  /**
-   * Executes the current use case.
-   *
-   * @param UseCaseSubscriber The guy who will be listen to the observable build with {@link #buildUseCaseObservable()}.
-   */
-  @SuppressWarnings("unchecked")
-  public void execute(Subscriber UseCaseSubscriber) {
-    this.subscription = this.buildUseCaseObservable()
-        .subscribeOn(Schedulers.from(threadExecutor))
-        .observeOn(postExecutionThread.getScheduler())
-        .subscribe(UseCaseSubscriber);
-  }
+	public void setPostExecutionThread(PostExecutionThread postExecutionThread) {
+		this.postExecutionThread = postExecutionThread;
+	}
 
-  /**
-   * Unsubscribes from current {@link rx.Subscription}.
-   */
-  public void unsubscribe() {
-    if (!subscription.isUnsubscribed()) {
-      subscription.unsubscribe();
-    }
-  }
+	/**
+	 * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
+	 */
+	protected abstract Observable buildUseCaseObservable();
+
+	/**
+	 * Executes the current use case.
+	 *
+	 * @param UseCaseSubscriber The guy who will be listen to the observable build with {@link #buildUseCaseObservable()}.
+	 */
+	@SuppressWarnings("unchecked")
+	public void execute(Subscriber UseCaseSubscriber) {
+		this.subscription = this.buildUseCaseObservable()
+				.subscribeOn(Schedulers.from(threadExecutor))
+				.observeOn(postExecutionThread.getScheduler())
+				.subscribe(UseCaseSubscriber);
+	}
+
+	/**
+	 * Unsubscribes from current {@link rx.Subscription}.
+	 */
+	public void unsubscribe() {
+		if (!subscription.isUnsubscribed()) {
+			subscription.unsubscribe();
+		}
+	}
 }

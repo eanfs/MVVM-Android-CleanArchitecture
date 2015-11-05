@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Fernando Cejas Open Source Project
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,7 +16,9 @@
 package com.fernandocejas.android10.sample.data.repository.datasource;
 
 import android.content.Context;
+
 import com.fernandocejas.android10.sample.data.cache.UserCache;
+import com.fernandocejas.android10.sample.data.cache.UserCacheImpl;
 import com.fernandocejas.android10.sample.data.entity.mapper.UserEntityJsonMapper;
 import com.fernandocejas.android10.sample.data.net.RestApi;
 import com.fernandocejas.android10.sample.data.net.RestApiImpl;
@@ -26,39 +28,47 @@ import com.fernandocejas.android10.sample.data.net.RestApiImpl;
  */
 public class UserDataStoreFactory {
 
-  private final Context context;
-  private final UserCache userCache;
+	private final Context context ;
+	private UserCache userCache;
 
-  public UserDataStoreFactory(Context context, UserCache userCache) {
-    if (context == null || userCache == null) {
-      throw new IllegalArgumentException("Constructor parameters cannot be null!!!");
-    }
-    this.context = context.getApplicationContext();
-    this.userCache = userCache;
-  }
+	public UserDataStoreFactory(Context applicationContext) {
+		this(applicationContext, new UserCacheImpl(applicationContext));
+	}
 
-  /**
-   * Create {@link UserDataStore} from a user id.
-   */
-  public UserDataStore create(int userId) {
-    UserDataStore userDataStore;
+	public UserDataStoreFactory(Context context, UserCache userCache) {
+		if (context == null || userCache == null) {
+			throw new IllegalArgumentException("Constructor parameters cannot be null!!!");
+		}
+		this.context = context.getApplicationContext();
+		this.userCache = userCache;
+	}
 
-    if (!this.userCache.isExpired() && this.userCache.isCached(userId)) {
-      userDataStore = new DiskUserDataStore(this.userCache);
-    } else {
-      userDataStore = createCloudDataStore();
-    }
+	public void setUserCache(UserCache userCache) {
+		this.userCache = userCache;
+	}
 
-    return userDataStore;
-  }
+	/**
+	 * Create {@link UserDataStore} from a user id.
+	 */
+	public UserDataStore create(int userId) {
+		UserDataStore userDataStore;
 
-  /**
-   * Create {@link UserDataStore} to retrieve data from the Cloud.
-   */
-  public UserDataStore createCloudDataStore() {
-    UserEntityJsonMapper userEntityJsonMapper = new UserEntityJsonMapper();
-    RestApi restApi = new RestApiImpl(this.context, userEntityJsonMapper);
+		if (!this.userCache.isExpired() && this.userCache.isCached(userId)) {
+			userDataStore = new DiskUserDataStore(this.userCache);
+		} else {
+			userDataStore = createCloudDataStore();
+		}
 
-    return new CloudUserDataStore(restApi, this.userCache);
-  }
+		return userDataStore;
+	}
+
+	/**
+	 * Create {@link UserDataStore} to retrieve data from the Cloud.
+	 */
+	public UserDataStore createCloudDataStore() {
+		UserEntityJsonMapper userEntityJsonMapper = new UserEntityJsonMapper();
+		RestApi restApi = new RestApiImpl(this.context, userEntityJsonMapper);
+
+		return new CloudUserDataStore(restApi, this.userCache);
+	}
 }

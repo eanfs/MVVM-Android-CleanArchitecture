@@ -17,9 +17,9 @@ package com.fernandocejas.android10.sample.presentation.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.fernandocejas.android10.sample.domain.User;
-import com.fernandocejas.android10.sample.domain.exception.DefaultErrorBundle;
-import com.fernandocejas.android10.sample.domain.exception.ErrorBundle;
+import com.fernandocejas.android10.sample.data.dto.User;
+import com.fernandocejas.android10.sample.data.exception.DefaultErrorBundle;
+import com.fernandocejas.android10.sample.data.exception.ErrorBundle;
 import com.fernandocejas.android10.sample.domain.interactor.DefaultSubscriber;
 import com.fernandocejas.android10.sample.domain.interactor.UseCase;
 import com.fernandocejas.android10.sample.presentation.exception.ErrorMessageFactory;
@@ -107,7 +107,7 @@ public class UserListPresenter implements Presenter {
 
 	private void showUsersCollectionInView(Collection<User> usersCollection) {
 		final Collection<UserModel> userModelsCollection =
-				this.userModelDataMapper.transform(usersCollection);
+				this.userModelDataMapper.transformUsers(usersCollection);
 		this.viewListView.renderUserList(userModelsCollection);
 	}
 
