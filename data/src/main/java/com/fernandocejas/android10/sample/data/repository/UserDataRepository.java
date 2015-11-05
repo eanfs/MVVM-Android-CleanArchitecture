@@ -24,16 +24,12 @@ import com.fernandocejas.android10.sample.domain.repository.UserRepository;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import rx.Observable;
 import rx.functions.Func1;
 
 /**
  * {@link UserRepository} for retrieving user data.
  */
-@Singleton
 public class UserDataRepository implements UserRepository {
 
 	private final UserDataStoreFactory userDataStoreFactory;
@@ -42,10 +38,9 @@ public class UserDataRepository implements UserRepository {
 	/**
 	 * Constructs a {@link UserRepository}.
 	 *
-	 * @param dataStoreFactory A factory to construct different data source implementations.
+	 * @param dataStoreFactory     A factory to construct different data source implementations.
 	 * @param userEntityDataMapper {@link UserEntityDataMapper}.
 	 */
-	@Inject
 	public UserDataRepository(UserDataStoreFactory dataStoreFactory,
 	                          UserEntityDataMapper userEntityDataMapper) {
 		this.userDataStoreFactory = dataStoreFactory;

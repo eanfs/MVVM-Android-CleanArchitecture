@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
   def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -40,9 +39,6 @@ dependencies {
   def testDependencies = rootProject.ext.dataTestDependencies
 
   compile project(':domain')
-  apt dataDependencies.daggerCompiler
-  provided dataDependencies.javaxAnnotation
-  compile dataDependencies.dagger
   compile dataDependencies.okHttp
   compile dataDependencies.gson
   compile dataDependencies.rxJava

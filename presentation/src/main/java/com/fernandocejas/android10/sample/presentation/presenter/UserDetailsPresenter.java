@@ -22,18 +22,14 @@ import com.fernandocejas.android10.sample.domain.exception.ErrorBundle;
 import com.fernandocejas.android10.sample.domain.interactor.DefaultSubscriber;
 import com.fernandocejas.android10.sample.domain.interactor.UseCase;
 import com.fernandocejas.android10.sample.presentation.exception.ErrorMessageFactory;
-import com.fernandocejas.android10.sample.presentation.internal.di.PerActivity;
 import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
 import com.fernandocejas.android10.sample.presentation.view.UserDetailsView;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * {@link Presenter} that controls communication between views and models of the presentation
  * layer.
  */
-@PerActivity
 public class UserDetailsPresenter implements Presenter {
 
   /** id used to retrieve user details */
@@ -44,8 +40,7 @@ public class UserDetailsPresenter implements Presenter {
   private final UseCase getUserDetailsUseCase;
   private final UserModelDataMapper userModelDataMapper;
 
-  @Inject
-  public UserDetailsPresenter(@Named("userDetails") UseCase getUserDetailsUseCase,
+  public UserDetailsPresenter(UseCase getUserDetailsUseCase,
       UserModelDataMapper userModelDataMapper) {
     this.getUserDetailsUseCase = getUserDetailsUseCase;
     this.userModelDataMapper = userModelDataMapper;

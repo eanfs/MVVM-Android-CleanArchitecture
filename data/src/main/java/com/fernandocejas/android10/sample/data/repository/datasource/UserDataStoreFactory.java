@@ -20,19 +20,15 @@ import com.fernandocejas.android10.sample.data.cache.UserCache;
 import com.fernandocejas.android10.sample.data.entity.mapper.UserEntityJsonMapper;
 import com.fernandocejas.android10.sample.data.net.RestApi;
 import com.fernandocejas.android10.sample.data.net.RestApiImpl;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * Factory that creates different implementations of {@link UserDataStore}.
  */
-@Singleton
 public class UserDataStoreFactory {
 
   private final Context context;
   private final UserCache userCache;
 
-  @Inject
   public UserDataStoreFactory(Context context, UserCache userCache) {
     if (context == null || userCache == null) {
       throw new IllegalArgumentException("Constructor parameters cannot be null!!!");
