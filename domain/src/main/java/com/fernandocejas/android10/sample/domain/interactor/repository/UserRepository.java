@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fernandocejas.android10.sample.data.repository;
+package com.fernandocejas.android10.sample.domain.interactor.repository;
 
 
 import com.fernandocejas.android10.sample.data.dto.User;

@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fernandocejas.android10.sample.data.repository;
+package com.fernandocejas.android10.sample.domain.interactor.repository;
 
 import android.content.Context;
 
 import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.data.entity.UserEntity;
 import com.fernandocejas.android10.sample.data.entity.mapper.UserEntityDataMapper;
-import com.fernandocejas.android10.sample.data.repository.datasource.UserDataStore;
-import com.fernandocejas.android10.sample.data.repository.datasource.UserDataStoreFactory;
+import com.fernandocejas.android10.sample.data.datasource.UserDataStore;
+import com.fernandocejas.android10.sample.data.datasource.UserDataStoreFactory;
 
 import java.util.List;
 

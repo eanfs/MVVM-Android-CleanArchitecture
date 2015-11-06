@@ -13,44 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fernandocejas.android10.sample.data.repository.datasource;
+package com.fernandocejas.android10.sample.data.datasource;
 
 import com.fernandocejas.android10.sample.data.ApplicationTestCase;
 import com.fernandocejas.android10.sample.data.cache.UserCache;
+import com.fernandocejas.android10.sample.data.entity.UserEntity;
+import com.fernandocejas.android10.sample.data.net.RestApi;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import rx.Observable;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-public class DiskUserDataStoreTest extends ApplicationTestCase {
+public class CloudUserDataStoreTest extends ApplicationTestCase {
 
-  private static final int FAKE_USER_ID = 11;
+  private static final int FAKE_USER_ID = 765;
 
-  private DiskUserDataStore diskUserDataStore;
+  private CloudUserDataStore cloudUserDataStore;
 
+  @Mock private RestApi mockRestApi;
   @Mock private UserCache mockUserCache;
-
-  @Rule public ExpectedException expectedException = ExpectedException.none();
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    diskUserDataStore = new DiskUserDataStore(mockUserCache);
+    cloudUserDataStore = new CloudUserDataStore(mockRestApi, mockUserCache);
   }
 
   @Test
-  public void testGetUserEntityListUnsupported() {
-    expectedException.expect(UnsupportedOperationException.class);
-    diskUserDataStore.userEntityList();
+  public void testGetUserEntityListFromApi() {
+    cloudUserDataStore.userEntityList();
+    verify(mockRestApi).userEntityList();
   }
 
   @Test
-  public void testGetUserEntityDetailesFromCache() {
-    diskUserDataStore.userEntityDetails(FAKE_USER_ID);
-    verify(mockUserCache).get(FAKE_USER_ID);
+  public void testGetUserEntityDetailsFromApi() {
+    UserEntity fakeUserEntity = new UserEntity();
+    Observable<UserEntity> fakeObservable = Observable.just(fakeUserEntity);
+    given(mockRestApi.userEntityById(FAKE_USER_ID)).willReturn(fakeObservable);
+
+    cloudUserDataStore.userEntityDetails(FAKE_USER_ID);
+
+    verify(mockRestApi).userEntityById(FAKE_USER_ID);
   }
 }
