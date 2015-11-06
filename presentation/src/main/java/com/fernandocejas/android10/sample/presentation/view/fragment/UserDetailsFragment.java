@@ -11,34 +11,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.UserDetailsBinding;
-import com.fernandocejas.android10.sample.presentation.model.UserModel;
-import com.fernandocejas.android10.sample.presentation.view.UserDetailsView;
-import com.fernandocejas.android10.sample.presentation.view.component.AutoLoadImageView;
 import com.fernandocejas.android10.sample.presentation.viewmodel.UserDetailsViewModel;
 
 /**
  * Fragment that shows details of a certain user.
  */
-public class UserDetailsFragment extends BaseFragment<UserDetailsViewModel, UserDetailsBinding> implements UserDetailsView {
+public class UserDetailsFragment extends BaseFragment<UserDetailsViewModel, UserDetailsBinding> {
+
+	public final static String TAG = UserDetailsFragment.class.getSimpleName();
 
 	private static final String ARGUMENT_KEY_USER_ID = "org.android10.ARGUMENT_USER_ID";
 
 	private int userId;
-
-	AutoLoadImageView iv_cover;
-	TextView tv_fullname;
-	TextView tv_email;
-	TextView tv_followers;
-	TextView tv_description;
-	RelativeLayout rl_progress;
-	RelativeLayout rl_retry;
-	Button bt_retry;
 
 	public UserDetailsFragment() {
 		super();
@@ -99,58 +86,7 @@ public class UserDetailsFragment extends BaseFragment<UserDetailsViewModel, User
 	}
 
 	@Override
-	public void renderUser(UserModel user) {
-		if (user != null) {
-			this.iv_cover.setImageUrl(user.getCoverUrl());
-			this.tv_fullname.setText(user.getFullName());
-			this.tv_email.setText(user.getEmail());
-			this.tv_followers.setText(String.valueOf(user.getFollowers()));
-			this.tv_description.setText(user.getDescription());
-		}
-	}
-
-	@Override
-	public void showLoading() {
-		this.rl_progress.setVisibility(View.VISIBLE);
-		this.getActivity().setProgressBarIndeterminateVisibility(true);
-	}
-
-	@Override
-	public void hideLoading() {
-		this.rl_progress.setVisibility(View.GONE);
-		this.getActivity().setProgressBarIndeterminateVisibility(false);
-	}
-
-	@Override
-	public void showRetry() {
-		this.rl_retry.setVisibility(View.VISIBLE);
-	}
-
-	@Override
-	public void hideRetry() {
-		this.rl_retry.setVisibility(View.GONE);
-	}
-
-	@Override
-	public void showError(String message) {
-		this.showToastMessage(message);
-	}
-
-	@Override
 	public Context getContext() {
 		return getActivity().getApplicationContext();
-	}
-
-	/**
-	 * Loads all users.
-	 */
-	private void loadUserDetails() {
-//		if (this.userDetailsPresenter != null) {
-//			this.userDetailsPresenter.initialize(this.userId);
-//		}
-	}
-
-	void onButtonRetryClick() {
-		UserDetailsFragment.this.loadUserDetails();
 	}
 }

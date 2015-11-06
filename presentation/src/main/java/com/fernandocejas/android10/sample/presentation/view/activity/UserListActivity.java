@@ -12,13 +12,11 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.model.UserModel;
-import com.fernandocejas.android10.sample.presentation.view.fragment.UserListFragment;
 
 /**
  * Activity that shows a list of Users.
  */
-public class UserListActivity<VM, B> extends BaseActivity implements UserListFragment.UserListListener {
+public class UserListActivity extends BaseActivity{
 
 	public static Intent getCallingIntent(Context context) {
 		return new Intent(context, UserListActivity.class);
@@ -32,8 +30,4 @@ public class UserListActivity<VM, B> extends BaseActivity implements UserListFra
 		DataBindingUtil.setContentView(this, R.layout.user_list_activity);
 	}
 
-	@Override
-	public void onUserClicked(UserModel userModel) {
-		this.navigator.navigateToUserDetails(this, userModel.getUserId());
-	}
 }

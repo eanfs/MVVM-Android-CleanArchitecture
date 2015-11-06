@@ -16,6 +16,7 @@ allprojects {
     androidApplicationId = 'com.fernanependocejas.android10.sample.presentation'
     androidVersionCode = 1
     androidVersionName = "1.0"
+
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     testApplicationId = 'com.fernandocejas.android10.sample.presentation.test'
   }
@@ -23,7 +24,7 @@ allprojects {
 
 task wrapper(type: Wrapper) {
   description 'Creates the gradle wrapper.'
-  gradleVersion '2.6'
+  gradleVersion '2.8'
 }
 
 task runDomainUnitTests(dependsOn: [':domain:test']) {

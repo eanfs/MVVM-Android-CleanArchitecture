@@ -16,6 +16,7 @@ android {
     versionName globalConfiguration.getAt("androidVersionName")
     testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
     testApplicationId globalConfiguration.getAt("testApplicationId")
+
   }
 
   compileOptions {
@@ -71,5 +72,9 @@ dependencies {
   androidTestCompile presentationTestDependencies.dexmaker
   androidTestCompile presentationTestDependencies.dexmakerMockito
   androidTestCompile presentationTestDependencies.espresso
-  androidTestCompile presentationTestDependencies.testingSupportLib
+  androidTestCompile presentationTestDependencies.espressoIntent
+//  androidTestCompile presentationTestDependencies.testingSupportLib
+  androidTestCompile presentationTestDependencies.runner
+  androidTestCompile presentationTestDependencies.rules
+  androidTestCompile presentationTestDependencies.androidAnnotations
 }

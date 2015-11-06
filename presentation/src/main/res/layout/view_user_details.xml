@@ -17,7 +17,7 @@
     bind:visibility="@{viewModel.showUserDetails?View.VISIBLE:View.GONE}"
     >
 
-  <com.fernandocejas.android10.sample.presentation.view.component.AutoLoadImageView
+  <com.fernandocejas.android10.sample.presentation.view.widget.AutoLoadImageView
       android:id="@+id/iv_cover"
       android:layout_width="match_parent"
       android:layout_height="@dimen/iv_cover_height"

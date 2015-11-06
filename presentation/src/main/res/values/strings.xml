@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Android Clean Architecture</string>
+  <string name="app_name">CleanArchitecture-MVVM</string>
   <string name="url">&lt;a href="http://rocko.xyz">http://rocko.xyz&lt;/a></string>
 
   <string name="activity_title_user_list">Users List</string>

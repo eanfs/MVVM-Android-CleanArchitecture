@@ -15,13 +15,15 @@
  */
 package com.fernandocejas.android10.sample.test.mapper;
 
-import com.fernandocejas.android10.sample.domain.User;
+import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
+
+import junit.framework.TestCase;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import junit.framework.TestCase;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -42,7 +44,7 @@ public class UserModelDataMapperTest extends TestCase {
 
   public void testTransformUser() {
     User user = createFakeUser();
-    UserModel userModel = userModelDataMapper.transform(user);
+    UserModel userModel = userModelDataMapper.transformUser(user);
 
     assertThat(userModel, is(instanceOf(UserModel.class)));
     assertThat(userModel.getUserId(), is(FAKE_USER_ID));
@@ -57,7 +59,7 @@ public class UserModelDataMapperTest extends TestCase {
     userList.add(mockUserOne);
     userList.add(mockUserTwo);
 
-    Collection<UserModel> userModelList = userModelDataMapper.transform(userList);
+    Collection<UserModel> userModelList = userModelDataMapper.transformUsers(userList);
 
     assertThat(userModelList.toArray()[0], is(instanceOf(UserModel.class)));
     assertThat(userModelList.toArray()[1], is(instanceOf(UserModel.class)));

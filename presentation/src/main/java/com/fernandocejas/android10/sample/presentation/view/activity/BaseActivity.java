@@ -8,15 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
-import com.fernandocejas.android10.sample.presentation.navigation.Navigator;
 import com.fernandocejas.android10.sample.presentation.viewmodel.ViewModel;
 
 /**
  * Base {@link android.app.Activity} class for every Activity in this application.
  */
 public abstract class BaseActivity<VM extends ViewModel, B extends ViewDataBinding> extends Activity {
-
-  Navigator navigator = new Navigator();
 
   private VM viewModel;
   private B binding;
@@ -68,10 +65,14 @@ public abstract class BaseActivity<VM extends ViewModel, B extends ViewDataBindi
    * @param containerViewId The container view to where add the fragment.
    * @param fragment The fragment to be added.
    */
-  protected void addFragment(int containerViewId, Fragment fragment) {
+  protected void addFragment(int containerViewId, Fragment fragment, String tag) {
     FragmentTransaction fragmentTransaction = this.getFragmentManager().beginTransaction();
-    fragmentTransaction.add(containerViewId, fragment);
+    fragmentTransaction.add(containerViewId, fragment, tag);
     fragmentTransaction.commit();
+  }
+
+  public <T extends Fragment>T getFragment(String tag) {
+    return (T) getFragmentManager().findFragmentByTag(tag);
   }
 
   public void setViewModel(@NonNull VM viewModel) {

@@ -7,6 +7,7 @@ package com.fernandocejas.android10.sample.presentation.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.Window;
 
@@ -18,7 +19,7 @@ import com.fernandocejas.android10.sample.presentation.view.fragment.UserDetails
  */
 public class UserDetailsActivity extends BaseActivity {
 
-	private static final String INTENT_EXTRA_PARAM_USER_ID = "org.android10.INTENT_PARAM_USER_ID";
+	public static final String INTENT_EXTRA_PARAM_USER_ID = "org.android10.INTENT_PARAM_USER_ID";
 	private static final String INSTANCE_STATE_PARAM_USER_ID = "org.android10.STATE_PARAM_USER_ID";
 
 	private int userId;
@@ -34,7 +35,7 @@ public class UserDetailsActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		setContentView(R.layout.activity_user_details);
+		DataBindingUtil.setContentView(this, R.layout.activity_user_details);
 
 		this.initializeActivity(savedInstanceState);
 	}
@@ -53,7 +54,7 @@ public class UserDetailsActivity extends BaseActivity {
 	private void initializeActivity(Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
 			this.userId = getIntent().getIntExtra(INTENT_EXTRA_PARAM_USER_ID, -1);
-			addFragment(R.id.fl_fragment, UserDetailsFragment.newInstance(this.userId));
+			addFragment(R.id.fl_fragment, UserDetailsFragment.newInstance(this.userId), UserDetailsFragment.TAG);
 		} else {
 			this.userId = savedInstanceState.getInt(INSTANCE_STATE_PARAM_USER_ID);
 		}
