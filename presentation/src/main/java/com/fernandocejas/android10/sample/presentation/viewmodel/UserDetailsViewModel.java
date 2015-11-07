@@ -8,6 +8,8 @@ import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.domain.interactor.DefaultSubscriber;
 import com.fernandocejas.android10.sample.domain.interactor.GetUserDetails;
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
+import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
+import com.fernandocejas.android10.sample.presentation.model.UserModel;
 
 /**
  * Created by rocko on 15-11-5.
@@ -15,9 +17,10 @@ import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 public class UserDetailsViewModel extends LoadingViewModel {
 
 	public final ObservableBoolean showUserDetails = new ObservableBoolean(true);
-	public final ObservableField<User> userObs = new ObservableField<>();
+	public final ObservableField<UserModel> userObs = new ObservableField<>();
 
 	GetUserDetails getUserDetailsUseCase = new GetUserDetails(AndroidApplication.getContext());
+	UserModelDataMapper userModelDataMapper = new UserModelDataMapper();
 
 	@BindView
 	@Override
@@ -36,11 +39,11 @@ public class UserDetailsViewModel extends LoadingViewModel {
 	}
 
 	@BindView
-	public void showUserDetails(User user) {
+	public void showUserDetails(UserModel userModel) {
 		showLoading.set(false);
 		showRetry.set(false);
 		showUserDetails.set(true);
-		userObs.set(user);
+		userObs.set(userModel);
 	}
 
 
@@ -51,7 +54,7 @@ public class UserDetailsViewModel extends LoadingViewModel {
 		getUserDetailsUseCase.execute(new DefaultSubscriber<User>(){
 			@Override
 			public void onNext(User user) {
-				showUserDetails(user);
+				showUserDetails(userModelDataMapper.transformUser(user));
 			}
 
 			@Override

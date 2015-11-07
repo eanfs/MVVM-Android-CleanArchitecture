@@ -1,27 +1,22 @@
-Android-CleanArchitecture [![Build Status](https://travis-ci.org/android10/Android-CleanArchitecture.svg?branch=master)](https://travis-ci.org/android10/Android-CleanArchitecture)
+MVVM_Android-CleanArchitecture Android-CleanArchitecture
 =========================
 
-This is a sample app that is part of a blog post I have written about how to architect android application using the Uncle Bob's clean architecture approach. 
+此项目由 [Android-CleanArchitecture](https://github.com/android10/Android-CleanArchitecture) fork 而来, 展现层(UI Layer or Presentation layer)重构成由 MVVM 模式实现，并去除 di(Dagger) 和 lambda。  
+  
+项目对应博客文章：[MVVM_Android-CleanArchitecture](http://rocko.xyz/2015/11/07/MVVM_Android-CleanArchitecture/)
 
-[Architecting Android…The clean way?](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/)
-
-[Architecting Android…The evolution](http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/)
-
-[Tasting Dagger 2 on Android](http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/)
-
-[Demo video of this sample](http://youtu.be/XSjV4sG3ni0)
 
 Clean architecture
 -----------------
-![http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/](http://fernandocejas.com/wp-content/uploads/2014/09/clean_architecture1.png)
+![Clean Architecture](http://rocko-blog.qiniudn.com/MVVM_Android-CleanArchitecture-2.png)
 
 Architectural approach
 -----------------
-![http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/](http://fernandocejas.com/wp-content/uploads/2014/09/clean_architecture_android.png)
+![MVVM_Clean-Architecture 分层结构](http://rocko-blog.qiniudn.com/MVVM_Android-CleanArchitecture-3.png)
 
 Architectural reactive approach
 -----------------
-![http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/](http://fernandocejas.com/wp-content/uploads/2015/07/clean_architecture_evolution.png)
+![MVVM_Clean-Architecture put all 应用在一起](http://rocko-blog.qiniudn.com/MVVM_Android-CleanArchitecture-4.png)
 
 Local Development
 -----------------
@@ -33,16 +28,10 @@ Here are some useful Gradle/adb commands for executing this example:
  * `./gradlew runUnitTests` - Execute domain and data layer tests (both unit and integration).
  * `./gradlew runAcceptanceTests` - Execute espresso and instrumentation acceptance tests.
 
-Code style
------------
-
-Here you can download and install the java codestyle.
-https://github.com/android10/java-code-styles
-
 
 License
 --------
-
+```
     Copyright 2014 Fernando Cejas
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -56,8 +45,4 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-
-
-![http://www.fernandocejas.com](http://www.android10.org/myimages/android10_logo_big_github.png)
-
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android--CleanArchitecture-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/909)
+```

@@ -55,14 +55,4 @@ public class UserListFragment extends BaseFragment<UserListViewModel, UserListBi
 	public Context getContext() {
 		return this.getActivity().getApplicationContext();
 	}
-
-	/**
-	 * Loads all users.
-	 */
-	private void loadUserList() {
-	}
-
-	void onButtonRetryClick() {
-		UserListFragment.this.loadUserList();
-	}
 }

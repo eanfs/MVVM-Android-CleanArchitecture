@@ -56,9 +56,6 @@ public class UserListViewModelTest {
 	private UserListViewModel userListViewModel;
 	private UsersAdapter usersAdapter;
 
-//	@Rule
-//	public ActivityTestRule<UserListActivity> mActivityRule = new ActivityTestRule(UserListActivity.class);
-
 	@Rule
 	public IntentsTestRule<UserListActivity> mActivityRule = new IntentsTestRule<>(
 			UserListActivity.class);
