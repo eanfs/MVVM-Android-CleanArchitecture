@@ -15,7 +15,6 @@
  */
 package com.fernandocejas.android10.sample.domain.interactor.repository;
 
-import com.fernandocejas.android10.sample.data.ApplicationTestCase;
 import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.data.entity.UserEntity;
 import com.fernandocejas.android10.sample.data.entity.mapper.UserEntityDataMapper;
@@ -38,7 +37,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 
-public class UserDataRepositoryTest extends ApplicationTestCase {
+public class UserDataRepositoryTest{
 
   private static final int FAKE_USER_ID = 123;
 

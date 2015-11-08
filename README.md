@@ -1,7 +1,7 @@
-MVVM_Android-CleanArchitecture Android-CleanArchitecture
+MVVM_Android-CleanArchitecture
 =========================
 
-此项目由 [Android-CleanArchitecture](https://github.com/android10/Android-CleanArchitecture) fork 而来, 展现层(UI Layer or Presentation layer)重构成由 MVVM 模式实现，并去除 di(Dagger) 和 lambda。  
+此项目由 [Android-CleanArchitecture](https://github.com/android10/Android-CleanArchitecture) fork 而来, 展现层(Presentation tier)重构成由 MVVM 模式实现，并去除 di(Dagger) 和 lambda。  
   
 项目对应博客文章：[MVVM_Android-CleanArchitecture](http://rocko.xyz/2015/11/07/MVVM_Android-CleanArchitecture/)
 

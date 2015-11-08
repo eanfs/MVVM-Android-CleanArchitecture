@@ -5,6 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.presentation.R;
+import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
 import com.fernandocejas.android10.sample.presentation.view.activity.UserDetailsActivity;
 import com.fernandocejas.android10.sample.presentation.view.fragment.UserDetailsFragment;
 
@@ -32,6 +33,7 @@ public class UserDetailsViewModelTest {
 
 	private User fakeUser;
 	private UserDetailsFragment detailsFragment;
+	private UserModelDataMapper userModelDataMapper;
 
 
 	@Rule
@@ -40,12 +42,13 @@ public class UserDetailsViewModelTest {
 	@Before
 	public void setUp() {
 		fakeUser = makeFakeUser();
+		userModelDataMapper = new UserModelDataMapper();
 		detailsFragment = (UserDetailsFragment) mActivityRule.getActivity().getFragment(UserDetailsFragment.TAG);
 	}
 
 	@Test
 	public void testShowUser() throws Exception {
-		detailsFragment.getViewModel().showUserDetails(fakeUser);
+		detailsFragment.getViewModel().showUserDetails(userModelDataMapper.transformUser(fakeUser));
 //		UserDetailsBinding userDetailsBinding = detailsFragment.getBinding();
 
 		onView(withId(R.id.tv_email)).check(matches(withText(FAKE_EMAIL)));
