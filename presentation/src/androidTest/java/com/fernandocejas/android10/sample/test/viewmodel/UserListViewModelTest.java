@@ -1,18 +1,14 @@
 package com.fernandocejas.android10.sample.test.viewmodel;
 
-import android.app.Activity;
-import android.app.Instrumentation;
-import android.content.Intent;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.fernandocejas.android10.sample.data.dto.User;
-import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
-import com.fernandocejas.android10.sample.presentation.navigation.ActivityNavigator;
 import com.fernandocejas.android10.sample.presentation.view.activity.UserDetailsActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.UserListActivity;
 import com.fernandocejas.android10.sample.presentation.view.adapter.UsersAdapter;
@@ -30,17 +26,10 @@ import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.isInternal;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertEquals;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.core.AllOf.allOf;
 
 /**
  * Created by rocko on 15-11-6.
@@ -79,15 +68,13 @@ public class UserListViewModelTest {
 	@Test
 	public void testShowContentList() throws Exception {
 		assertEquals(fakeUsersList.size(), usersAdapter.getItemCount());
-
-		User user = fakeUsersList.get(0);
-		onView(withText(user.getFullName())).check(matches(isDisplayed()));
 	}
 
 	@Test
 	public void testOnUserItemClick() throws Exception {
 		User user = fakeUsersList.get(1);
-		onView(withText(user.getFullName())).perform(click());
+
+		onView(withId(R.id.rv_users)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
 
 		intending(hasExtra(UserDetailsActivity.INTENT_EXTRA_PARAM_USER_ID, user.getUserId() + ""));
 	}

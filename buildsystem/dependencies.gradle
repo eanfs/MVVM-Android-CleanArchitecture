@@ -27,9 +27,9 @@ ext {
   dexmakerVersion = '1.0'
   runnerVersion = "0.4.1"
   rulesVersion = "0.4.1"
-  espressoVersion = '2.2.1'
-  espressoIntentVersion = '2.2.1'
-
+  espressoVersion = "2.2.1"
+  espressoIntentVersion = espressoVersion
+  espressoContrib = espressoVersion
 
   presentationDependencies = [
       recyclerView:       "com.android.support:recyclerview-v7:${recyclerViewVersion}",
@@ -43,6 +43,7 @@ ext {
       dexmakerMockito:    "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
       espresso:           "com.android.support.test.espresso:espresso-core:${espressoVersion}",
       espressoIntent: "com.android.support.test.espresso:espresso-intents:${espressoIntentVersion}",
+      espressoContrib: "com.android.support.test.espresso:espresso-contrib:${espressoContrib}",
       runner: "com.android.support.test:runner:${runnerVersion}",
       rules: "com.android.support.test:rules:${rulesVersion}",
       // Force usage of support annotations in the test app, since it is internally used by the runner module.

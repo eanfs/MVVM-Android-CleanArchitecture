@@ -26,7 +26,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class UserDetailsViewModelTest {
 
 	private final static int FAKE_USER_ID = 1;
-
+	private final static String FAKE_USER_NAME = "FAKE_USER_NAME";
 	private final static String FAKE_EMAIL = "FAKE_EMAIL@fake.com";
 	private final static String FAKE_DESCRIPTION = "FAKE_DESCRIPTION";
 	private final static int FAKE_FOLLOWERS = 300;
@@ -50,7 +50,7 @@ public class UserDetailsViewModelTest {
 	public void testShowUser() throws Exception {
 		detailsFragment.getViewModel().showUserDetails(userModelDataMapper.transformUser(fakeUser));
 //		UserDetailsBinding userDetailsBinding = detailsFragment.getBinding();
-
+		onView(withId(R.id.tv_fullname)).check(matches(withText(FAKE_USER_NAME)));
 		onView(withId(R.id.tv_email)).check(matches(withText(FAKE_EMAIL)));
 		onView(withId(R.id.tv_followers)).check(matches(withText(String.valueOf(FAKE_FOLLOWERS))));
 		onView(withId(R.id.tv_description)).check(matches(withText(FAKE_DESCRIPTION)));
@@ -59,6 +59,7 @@ public class UserDetailsViewModelTest {
 
 	private User makeFakeUser() {
 		User fakeUser = new User(FAKE_USER_ID);
+		fakeUser.setFullName(FAKE_USER_NAME);
 		fakeUser.setEmail(FAKE_EMAIL);
 		fakeUser.setFollowers(FAKE_FOLLOWERS);
 		fakeUser.setDescription(FAKE_DESCRIPTION);

@@ -28,6 +28,7 @@
   <TextView
       android:id="@+id/tv_fullname"
       style="@style/AppTheme.TextViewHeader"
+      bind:text="@{viewModel.userObs.fullName}"
       />
 
   <LinearLayout
