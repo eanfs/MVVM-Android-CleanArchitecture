@@ -8,8 +8,8 @@ import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.domain.interactor.DefaultSubscriber;
 import com.fernandocejas.android10.sample.domain.interactor.GetUserDetails;
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
-import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper;
-import com.fernandocejas.android10.sample.presentation.model.UserModel;
+import com.fernandocejas.android10.sample.domain.interactor.mapper.UserModelDataMapper;
+import com.fernandocejas.android10.sample.domain.interactor.model.UserModel;
 
 /**
  * Created by rocko on 15-11-5.

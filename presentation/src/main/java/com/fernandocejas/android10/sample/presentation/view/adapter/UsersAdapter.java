@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.RowUserBinding;
-import com.fernandocejas.android10.sample.presentation.model.UserModel;
+import com.fernandocejas.android10.sample.domain.interactor.model.UserModel;
 
 import java.util.Collection;
 import java.util.List;
