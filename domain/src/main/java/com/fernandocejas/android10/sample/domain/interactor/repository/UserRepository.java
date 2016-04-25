@@ -16,25 +16,25 @@
 package com.fernandocejas.android10.sample.domain.interactor.repository;
 
 
-import com.fernandocejas.android10.sample.data.dto.User;
+import com.fernandocejas.android10.sample.domain.interactor.model.UserModel;
 
 import java.util.List;
 
 import rx.Observable;
 
 /**
- * Interface that represents a Repository for getting {@link User} related data.
+ * Interface that represents a Repository for getting {@link UserModel} related data.
  */
 public interface UserRepository {
 	/**
-	 * Get an {@link Observable} which will emit a List of {@link User}.
+	 * Get an {@link Observable} which will emit a List of {@link UserModel}.
 	 */
-	Observable<List<User>> users();
+	Observable<List<UserModel>> users();
 
 	/**
-	 * Get an {@link Observable} which will emit a {@link User}.
+	 * Get an {@link Observable} which will emit a {@link UserModel}.
 	 *
 	 * @param userId The user id used to retrieve user data.
 	 */
-	Observable<User> user(final int userId);
+	Observable<UserModel> user(final int userId);
 }

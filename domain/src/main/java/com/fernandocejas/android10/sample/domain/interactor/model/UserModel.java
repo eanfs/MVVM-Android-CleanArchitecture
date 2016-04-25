@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fernandocejas.android10.sample.data.dto;
+package com.fernandocejas.android10.sample.domain.interactor.model;
 
 /**
- * Class that represents a User in the domain layer.
+ * Class that represents a user in the presentation layer.
  */
-public class User{
+public class UserModel {
 
   private final int userId;
 
-  public User(int userId) {
+  public UserModel(int userId) {
     this.userId = userId;
   }
 
@@ -79,7 +79,7 @@ public class User{
   @Override public String toString() {
     StringBuilder stringBuilder = new StringBuilder();
 
-    stringBuilder.append("***** User Details *****\n");
+    stringBuilder.append("***** User Model Details *****\n");
     stringBuilder.append("id=" + this.getUserId() + "\n");
     stringBuilder.append("cover url=" + this.getCoverUrl() + "\n");
     stringBuilder.append("fullname=" + this.getFullName() + "\n");

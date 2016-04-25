@@ -18,7 +18,6 @@ package com.fernandocejas.android10.sample.domain.interactor;
 
 import android.content.Context;
 
-import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.domain.interactor.repository.UserDataRepository;
 import com.fernandocejas.android10.sample.domain.interactor.repository.UserRepository;
 

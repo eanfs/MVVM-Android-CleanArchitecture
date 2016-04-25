@@ -4,7 +4,6 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.view.View;
 
-import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.domain.interactor.DefaultSubscriber;
 import com.fernandocejas.android10.sample.domain.interactor.GetUserDetails;
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
@@ -51,10 +50,10 @@ public class UserDetailsViewModel extends LoadingViewModel {
 	public void loadUserDetailsCommand(int userId) {
 		showLoading();
 		getUserDetailsUseCase.setUserId(userId);
-		getUserDetailsUseCase.execute(new DefaultSubscriber<User>(){
+		getUserDetailsUseCase.execute(new DefaultSubscriber<UserModel>(){
 			@Override
-			public void onNext(User user) {
-				showUserDetails(userModelDataMapper.transformUser(user));
+			public void onNext(UserModel user) {
+				showUserDetails(user);
 			}
 
 			@Override

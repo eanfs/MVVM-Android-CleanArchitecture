@@ -6,7 +6,6 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.view.View;
 
-import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.domain.interactor.DefaultSubscriber;
 import com.fernandocejas.android10.sample.domain.interactor.GetUserList;
 import com.fernandocejas.android10.sample.domain.interactor.UseCase;
@@ -66,11 +65,10 @@ public class UserListViewModel extends LoadingViewModel {
 			return;
 		}
 		showLoading();
-		getUserList.execute(new DefaultSubscriber<List<User>>() {
+		getUserList.execute(new DefaultSubscriber<List<UserModel>>() {
 			@Override
-			public void onNext(List<User> users) {
-				Collection<UserModel> userModelsCollection = userModelDataMapper.transformUsers(users);
-				UsersAdapter usersAdapter = new UsersAdapter(AndroidApplication.getContext(), userModelsCollection);
+			public void onNext(List<UserModel> users) {
+				UsersAdapter usersAdapter = new UsersAdapter(AndroidApplication.getContext(), users);
 				usersAdapter.setOnItemClickListener(onUserItemClick());
 				showContentList(usersAdapter);
 			}

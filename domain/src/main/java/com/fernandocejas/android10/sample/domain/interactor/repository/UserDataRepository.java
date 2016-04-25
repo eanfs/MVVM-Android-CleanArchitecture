@@ -17,11 +17,11 @@ package com.fernandocejas.android10.sample.domain.interactor.repository;
 
 import android.content.Context;
 
-import com.fernandocejas.android10.sample.data.dto.User;
 import com.fernandocejas.android10.sample.data.entity.UserEntity;
-import com.fernandocejas.android10.sample.data.entity.mapper.UserEntityDataMapper;
 import com.fernandocejas.android10.sample.data.datasource.UserDataStore;
 import com.fernandocejas.android10.sample.data.datasource.UserDataStoreFactory;
+import com.fernandocejas.android10.sample.domain.interactor.mapper.UserModelDataMapper;
+import com.fernandocejas.android10.sample.domain.interactor.model.UserModel;
 
 import java.util.List;
 
@@ -34,20 +34,20 @@ import rx.functions.Func1;
 public class UserDataRepository implements UserRepository {
 
 	private UserDataStoreFactory userDataStoreFactory;
-	private UserEntityDataMapper userEntityDataMapper;
+	private UserModelDataMapper userEntityDataMapper;
 
 	public UserDataRepository(Context appContext) {
-		this(new UserDataStoreFactory(appContext), new UserEntityDataMapper());
+		this(new UserDataStoreFactory(appContext), new UserModelDataMapper());
 	}
 
 	/**
 	 * Constructs a {@link UserRepository}.
 	 *
 	 * @param dataStoreFactory     A factory to construct different data source implementations.
-	 * @param userEntityDataMapper {@link UserEntityDataMapper}.
+	 * @param userEntityDataMapper {@link UserModelDataMapper}.
 	 */
 	public UserDataRepository(UserDataStoreFactory dataStoreFactory,
-	                          UserEntityDataMapper userEntityDataMapper) {
+							  UserModelDataMapper userEntityDataMapper) {
 		this.userDataStoreFactory = dataStoreFactory;
 		this.userEntityDataMapper = userEntityDataMapper;
 	}
@@ -56,34 +56,34 @@ public class UserDataRepository implements UserRepository {
 		this.userDataStoreFactory = userDataStoreFactory;
 	}
 
-	public void setUserEntityDataMapper(UserEntityDataMapper userEntityDataMapper) {
+	public void setUserEntityDataMapper(UserModelDataMapper userEntityDataMapper) {
 		this.userEntityDataMapper = userEntityDataMapper;
 	}
 
 	@SuppressWarnings("Convert2MethodRef")
 	@Override
-	public Observable<List<User>> users() {
+	public Observable<List<UserModel>> users() {
 		//we always get all users from the cloud
 		final UserDataStore userDataStore = this.userDataStoreFactory.createCloudDataStore();
 
 		return userDataStore.userEntityList()
-				.map(new Func1<List<UserEntity>, List<User>>() {
+				.map(new Func1<List<UserEntity>, List<UserModel>>() {
 					@Override
-					public List<User> call(List<UserEntity> userEntities) {
-						return userEntityDataMapper.transform(userEntities);
+					public List<UserModel> call(List<UserEntity> userEntities) {
+						return userEntityDataMapper.transformUsers(userEntities);
 					}
 				});
 	}
 
 	@SuppressWarnings("Convert2MethodRef")
 	@Override
-	public Observable<User> user(int userId) {
+	public Observable<UserModel> user(int userId) {
 		final UserDataStore userDataStore = this.userDataStoreFactory.create(userId);
 		return userDataStore.userEntityDetails(userId)
-				.map(new Func1<UserEntity, User>() {
+				.map(new Func1<UserEntity, UserModel>() {
 					@Override
-					public User call(UserEntity userEntity) {
-						return userEntityDataMapper.transform(userEntity);
+					public UserModel call(UserEntity userEntity) {
+						return userEntityDataMapper.transformUser(userEntity);
 					}
 				});
 	}
