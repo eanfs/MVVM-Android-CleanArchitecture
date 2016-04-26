@@ -75,7 +75,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 		return position;
 	}
 
-	public void setUsersCollection(Collection<UserModel> usersCollection) {
+	public void setUsersCollection(List<UserModel> usersCollection) {
 		this.validateUsersCollection(usersCollection);
 		this.usersCollection = (List<UserModel>) usersCollection;
 		this.notifyDataSetChanged();

@@ -15,15 +15,14 @@
  */
 package com.fernandocejas.android10.sample.data.cache.serializer;
 
+import com.alibaba.fastjson.JSON;
 import com.fernandocejas.android10.sample.data.entity.UserEntity;
-import com.google.gson.Gson;
 
 /**
  * Class user as Serializer/Deserializer for user entities.
  */
 public class JsonSerializer {
 
-  private final Gson gson = new Gson();
 
   public JsonSerializer() {}
 
@@ -33,7 +32,7 @@ public class JsonSerializer {
    * @param userEntity {@link UserEntity} to serialize.
    */
   public String serialize(UserEntity userEntity) {
-    String jsonString = gson.toJson(userEntity, UserEntity.class);
+    String jsonString = JSON.toJSONString(userEntity);
     return jsonString;
   }
 
@@ -44,7 +43,7 @@ public class JsonSerializer {
    * @return {@link UserEntity}
    */
   public UserEntity deserialize(String jsonString) {
-    UserEntity userEntity = gson.fromJson(jsonString, UserEntity.class);
+    UserEntity userEntity = JSON.parseObject(jsonString, UserEntity.class);
     return userEntity;
   }
 }

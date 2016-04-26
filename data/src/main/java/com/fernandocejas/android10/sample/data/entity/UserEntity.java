@@ -15,57 +15,49 @@
  */
 package com.fernandocejas.android10.sample.data.entity;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * User Entity used in the data layer.
  */
 public class UserEntity {
 
-  @SerializedName("id")
-  private int userId;
+  private int id;
 
-  @SerializedName("cover_url")
-  private String coverUrl;
+  private String cover_url;
+  private String full_name;
 
-  @SerializedName("full_name")
-  private String fullname;
-
-  @SerializedName("description")
   private String description;
 
-  @SerializedName("followers")
   private int followers;
 
-  @SerializedName("email")
   private String email;
 
   public UserEntity() {
     //empty
   }
 
-  public int getUserId() {
-    return userId;
+
+  public int getId() {
+    return id;
   }
 
-  public void setUserId(int userId) {
-    this.userId = userId;
+  public void setId(int id) {
+    this.id = id;
   }
 
-  public String getCoverUrl() {
-    return coverUrl;
+  public String getCover_url() {
+    return cover_url;
   }
 
-  public void setCoverUrl(String coverUrl) {
-    this.coverUrl = coverUrl;
+  public void setCover_url(String cover_url) {
+    this.cover_url = cover_url;
   }
 
-  public String getFullname() {
-    return fullname;
+  public String getFull_name() {
+    return full_name;
   }
 
-  public void setFullname(String fullname) {
-    this.fullname = fullname;
+  public void setFull_name(String full_name) {
+    this.full_name = full_name;
   }
 
   public String getDescription() {
@@ -96,9 +88,9 @@ public class UserEntity {
     StringBuilder stringBuilder = new StringBuilder();
 
     stringBuilder.append("***** User Entity Details *****\n");
-    stringBuilder.append("id=" + this.getUserId() + "\n");
-    stringBuilder.append("cover url=" + this.getCoverUrl() + "\n");
-    stringBuilder.append("fullname=" + this.getFullname() + "\n");
+    stringBuilder.append("id=" + this.getId() + "\n");
+    stringBuilder.append("cover url=" + this.getCover_url() + "\n");
+    stringBuilder.append("fullname=" + this.getFull_name() + "\n");
     stringBuilder.append("email=" + this.getEmail() + "\n");
     stringBuilder.append("description=" + this.getDescription() + "\n");
     stringBuilder.append("followers=" + this.getFollowers() + "\n");

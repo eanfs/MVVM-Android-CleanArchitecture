@@ -41,12 +41,13 @@ public class UserModelDataMapper {
     if (user == null) {
       throw new IllegalArgumentException("Cannot transform a null value");
     }
-    UserModel userModel = new UserModel(user.getUserId());
-    userModel.setCoverUrl(user.getCoverUrl());
-    userModel.setFullName(user.getFullname());
+    UserModel userModel = new UserModel(user.getId());
+    userModel.setCoverUrl(user.getCover_url());
+    userModel.setFullName(user.getFull_name());
     userModel.setEmail(user.getEmail());
     userModel.setDescription(user.getDescription());
     userModel.setFollowers(user.getFollowers());
+
 
     return userModel;
   }

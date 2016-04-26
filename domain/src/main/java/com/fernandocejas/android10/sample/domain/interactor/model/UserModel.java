@@ -36,6 +36,7 @@ public class UserModel {
     return userId;
   }
 
+
   public String getCoverUrl() {
     return coverUrl;
   }
@@ -75,6 +76,8 @@ public class UserModel {
   public void setFollowers(int followers) {
     this.followers = followers;
   }
+
+
 
   @Override public String toString() {
     StringBuilder stringBuilder = new StringBuilder();

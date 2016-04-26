@@ -39,7 +39,7 @@ dependencies {
   def testDependencies = rootProject.ext.dataTestDependencies
 
   compile dataDependencies.okHttp
-  compile dataDependencies.gson
+  compile dataDependencies.fastJson
   compile dataDependencies.rxJava
   compile dataDependencies.rxAndroid
   compile dataDependencies.androidAnnotations

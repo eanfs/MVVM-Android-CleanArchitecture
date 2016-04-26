@@ -25,7 +25,7 @@ import rx.Observable;
 
 /**
  * This class is an implementation of {@link UseCase} that represents a use case for
- * retrieving a collection of all {@link User}.
+ * retrieving a collection of all {@link com.fernandocejas.android10.sample.domain.interactor.model.UserModel}.
  */
 public class GetUserList extends UseCase {
 
