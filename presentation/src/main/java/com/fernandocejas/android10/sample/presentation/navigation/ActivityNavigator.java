@@ -13,34 +13,34 @@ import com.fernandocejas.android10.sample.presentation.AndroidApplication;
  */
 public class ActivityNavigator {
 
-	/**
-	 * @param targetActivity
-	 */
-	public static void navigateTo(@NonNull Class<? extends Activity> targetActivity) {
-		navigateTo(targetActivity, new Intent(AndroidApplication.getInstance().getCurrentActivity(), targetActivity));
-	}
+    /**
+     * @param targetActivity
+     */
+    public static void navigateTo(@NonNull Class<? extends Activity> targetActivity) {
+        navigateTo(targetActivity, new Intent(AndroidApplication.getInstance().getCurrentActivity(), targetActivity));
+    }
 
-	/**
-	 * @param targetActivity
-	 * @param intent
-	 */
-	public static void navigateTo(@NonNull Class<? extends Activity> targetActivity, @NonNull Intent intent) {
-		Activity currentActivity = AndroidApplication.getInstance().getCurrentActivity();
-		navigateTo(currentActivity, targetActivity, intent);
-	}
+    /**
+     * @param targetActivity
+     * @param intent
+     */
+    public static void navigateTo(@NonNull Class<? extends Activity> targetActivity, @NonNull Intent intent) {
+        Activity currentActivity = AndroidApplication.getInstance().getCurrentActivity();
+        navigateTo(currentActivity, targetActivity, intent);
+    }
 
-	/**
-	 * Used in onCreate(before onResume) method to ensure current activity is not null.
-	 *
-	 * @param context
-	 * @param targetActivity
-	 * @param intent
-	 */
-	public static void navigateTo(@NonNull Context context, @NonNull Class<? extends Activity> targetActivity, @NonNull Intent intent) {
-		context.startActivity(intent);
-	}
+    /**
+     * Used in onCreate(before onResume) method to ensure current activity is not null.
+     *
+     * @param context
+     * @param targetActivity
+     * @param intent
+     */
+    public static void navigateTo(@NonNull Context context, @NonNull Class<? extends Activity> targetActivity, @NonNull Intent intent) {
+        context.startActivity(intent);
+    }
 
-	public static void finish() {
-		AndroidApplication.getInstance().getCurrentActivity().finish();
-	}
+    public static void finish() {
+        AndroidApplication.getInstance().getCurrentActivity().finish();
+    }
 }

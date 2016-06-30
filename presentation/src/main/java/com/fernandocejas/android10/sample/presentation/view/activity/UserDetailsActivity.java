@@ -19,45 +19,45 @@ import com.fernandocejas.android10.sample.presentation.view.fragment.UserDetails
  */
 public class UserDetailsActivity extends BaseActivity {
 
-	public static final String INTENT_EXTRA_PARAM_USER_ID = "org.android10.INTENT_PARAM_USER_ID";
-	private static final String INSTANCE_STATE_PARAM_USER_ID = "org.android10.STATE_PARAM_USER_ID";
+    public static final String INTENT_EXTRA_PARAM_USER_ID = "org.android10.INTENT_PARAM_USER_ID";
+    private static final String INSTANCE_STATE_PARAM_USER_ID = "org.android10.STATE_PARAM_USER_ID";
 
-	private int userId;
+    private int userId;
 
-	public static Intent getCallingIntent(Context context, int userId) {
-		Intent callingIntent = new Intent(context, UserDetailsActivity.class);
-		callingIntent.putExtra(INTENT_EXTRA_PARAM_USER_ID, userId);
+    public static Intent getCallingIntent(Context context, int userId) {
+        Intent callingIntent = new Intent(context, UserDetailsActivity.class);
+        callingIntent.putExtra(INTENT_EXTRA_PARAM_USER_ID, userId);
 
-		return callingIntent;
-	}
+        return callingIntent;
+    }
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		DataBindingUtil.setContentView(this, R.layout.activity_user_details);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        DataBindingUtil.setContentView(this, R.layout.activity_user_details);
 
-		this.initializeActivity(savedInstanceState);
-	}
+        this.initializeActivity(savedInstanceState);
+    }
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		if (outState != null) {
-			outState.putInt(INSTANCE_STATE_PARAM_USER_ID, this.userId);
-		}
-		super.onSaveInstanceState(outState);
-	}
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (outState != null) {
+            outState.putInt(INSTANCE_STATE_PARAM_USER_ID, this.userId);
+        }
+        super.onSaveInstanceState(outState);
+    }
 
-	/**
-	 * Initializes this activity.
-	 */
-	private void initializeActivity(Bundle savedInstanceState) {
-		if (savedInstanceState == null) {
-			this.userId = getIntent().getIntExtra(INTENT_EXTRA_PARAM_USER_ID, -1);
-			addFragment(R.id.fl_fragment, UserDetailsFragment.newInstance(this.userId), UserDetailsFragment.TAG);
-		} else {
-			this.userId = savedInstanceState.getInt(INSTANCE_STATE_PARAM_USER_ID);
-		}
-	}
+    /**
+     * Initializes this activity.
+     */
+    private void initializeActivity(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            this.userId = getIntent().getIntExtra(INTENT_EXTRA_PARAM_USER_ID, -1);
+            addFragment(R.id.fl_fragment, UserDetailsFragment.newInstance(this.userId), UserDetailsFragment.TAG);
+        } else {
+            this.userId = savedInstanceState.getInt(INSTANCE_STATE_PARAM_USER_ID);
+        }
+    }
 
 }

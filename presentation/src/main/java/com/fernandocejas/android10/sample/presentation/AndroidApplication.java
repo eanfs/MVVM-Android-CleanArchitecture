@@ -24,30 +24,30 @@ import android.support.annotation.NonNull;
  */
 public class AndroidApplication extends Application {
 
-	private static AndroidApplication instance;
+    private static AndroidApplication instance;
 
-	private Activity mCurrentActivity;
+    private Activity mCurrentActivity;
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		instance = this;
-	}
+    public static AndroidApplication getContext() {
+        return instance;
+    }
 
-	public static AndroidApplication getContext() {
-		return instance;
-	}
+    public static AndroidApplication getInstance() {
+        return instance;
+    }
 
-	public static AndroidApplication getInstance() {
-		return instance;
-	}
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        instance = this;
+    }
 
-	public Activity getCurrentActivity() {
-		return mCurrentActivity;
-	}
+    public Activity getCurrentActivity() {
+        return mCurrentActivity;
+    }
 
-	public void setCurrentActivity(@NonNull Activity mCurrentActivity) {
-		this.mCurrentActivity = mCurrentActivity;
-	}
+    public void setCurrentActivity(@NonNull Activity mCurrentActivity) {
+        this.mCurrentActivity = mCurrentActivity;
+    }
 
 }

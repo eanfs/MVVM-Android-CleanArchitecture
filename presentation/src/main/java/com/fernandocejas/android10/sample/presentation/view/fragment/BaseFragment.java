@@ -18,45 +18,44 @@ import com.fernandocejas.android10.sample.presentation.viewmodel.ViewModel;
  */
 public abstract class BaseFragment<VM extends ViewModel, B extends ViewDataBinding> extends Fragment {
 
-	private VM viewModel;
-	private B binding;
+    private VM viewModel;
+    private B binding;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
-	/**
-	 * Shows a {@link android.widget.Toast} message.
-	 *
-	 * @param message An string representing a message to be shown.
-	 */
-	protected void showToastMessage(String message) {
-		Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-	}
+    /**
+     * Shows a {@link android.widget.Toast} message.
+     *
+     * @param message An string representing a message to be shown.
+     */
+    protected void showToastMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
 
+    public VM getViewModel() {
+        if (viewModel == null) {
+            throw new NullPointerException("You should setViewModel first!");
+        }
+        return viewModel;
+    }
 
-	public void setViewModel(@NonNull VM viewModel) {
-		this.viewModel = viewModel;
-	}
+    public void setViewModel(@NonNull VM viewModel) {
+        this.viewModel = viewModel;
+    }
 
-	public VM getViewModel() {
-		if (viewModel == null) {
-			throw new NullPointerException("You should setViewModel first!");
-		}
-		return viewModel;
-	}
+    public B getBinding() {
+        if (binding == null) {
+            throw new NullPointerException("You should setBinding first!");
+        }
+        return binding;
+    }
 
-	public void setBinding(@NonNull B binding) {
-		this.binding = binding;
-	}
-
-	public B getBinding() {
-		if (binding == null) {
-			throw new NullPointerException("You should setBinding first!");
-		}
-		return binding;
-	}
+    public void setBinding(@NonNull B binding) {
+        this.binding = binding;
+    }
 
 }

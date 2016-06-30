@@ -10,13 +10,13 @@ import com.fernandocejas.android10.sample.presentation.view.activity.UserListAct
  */
 public class HomeViewModel extends ViewModel {
 
-	@Command
-	public View.OnClickListener onClickLoadData() {
-		return new View.OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				ActivityNavigator.navigateTo(UserListActivity.class);
-			}
-		};
-	}
+    @Command
+    public View.OnClickListener onClickLoadData() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityNavigator.navigateTo(UserListActivity.class);
+            }
+        };
+    }
 }

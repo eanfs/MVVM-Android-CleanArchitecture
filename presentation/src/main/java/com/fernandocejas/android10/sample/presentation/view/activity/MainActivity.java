@@ -14,20 +14,20 @@ import com.fernandocejas.android10.sample.presentation.viewmodel.HomeViewModel;
  */
 public class MainActivity extends BaseActivity<HomeViewModel, HomeBinding> {
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    setViewModel(new HomeViewModel());
-    setBinding(DataBindingUtil.<HomeBinding>setContentView(this, R.layout.home_activity));
-    getBinding().setViewModel(getViewModel());
+        setViewModel(new HomeViewModel());
+        setBinding(DataBindingUtil.<HomeBinding>setContentView(this, R.layout.home_activity));
+        getBinding().setViewModel(getViewModel());
 
-    initWidget();
-  }
+        initWidget();
+    }
 
-  private void initWidget() {
-    getBinding().linkTv.setText(Html.fromHtml(getResources().getString(R.string.url)));
-    getBinding().linkTv.setMovementMethod(LinkMovementMethod.getInstance());
-  }
+    private void initWidget() {
+        getBinding().linkTv.setText(Html.fromHtml(getResources().getString(R.string.url)));
+        getBinding().linkTv.setMovementMethod(LinkMovementMethod.getInstance());
+    }
 
 }

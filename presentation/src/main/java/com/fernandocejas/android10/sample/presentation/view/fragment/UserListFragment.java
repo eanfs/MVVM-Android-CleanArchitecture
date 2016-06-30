@@ -22,37 +22,37 @@ import com.fernandocejas.android10.sample.presentation.viewmodel.UserListViewMod
  */
 public class UserListFragment extends BaseFragment<UserListViewModel, UserListBinding> {
 
-	public final static String TAG = UserListFragment.class.getSimpleName();
+    public final static String TAG = UserListFragment.class.getSimpleName();
 
-	public UserListFragment() {
-		super();
-	}
+    public UserListFragment() {
+        super();
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-		setViewModel(new UserListViewModel());
-		setBinding(DataBindingUtil.<UserListBinding>inflate(inflater, R.layout.fragment_user_list, container, true));
-		getBinding().setViewModel(getViewModel());
+        setViewModel(new UserListViewModel());
+        setBinding(DataBindingUtil.<UserListBinding>inflate(inflater, R.layout.fragment_user_list, container, true));
+        getBinding().setViewModel(getViewModel());
 
-		setupUI();
+        setupUI();
 
-		return getBinding().getRoot();
-	}
+        return getBinding().getRoot();
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		getViewModel().loadUsersCommand();
-	}
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getViewModel().loadUsersCommand();
+    }
 
-	private void setupUI() {
-		getBinding().rvUsers.setLayoutManager(new UsersLayoutManager(getActivity()));
-	}
+    private void setupUI() {
+        getBinding().rvUsers.setLayoutManager(new UsersLayoutManager(getActivity()));
+    }
 
-	@Override
-	public Context getContext() {
-		return this.getActivity().getApplicationContext();
-	}
+    @Override
+    public Context getContext() {
+        return this.getActivity().getApplicationContext();
+    }
 }

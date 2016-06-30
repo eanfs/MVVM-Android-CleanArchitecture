@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.fernandocejas.android10.sample.domain.interactor.model.UserModel;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.RowUserBinding;
-import com.fernandocejas.android10.sample.domain.interactor.model.UserModel;
 
 import java.util.Collection;
 import java.util.List;
@@ -26,77 +26,75 @@ import java.util.List;
  */
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
 
-	private RowUserBinding rowUserBinding;
+    private final LayoutInflater layoutInflater;
+    private RowUserBinding rowUserBinding;
+    private List<UserModel> usersCollection;
+    private OnItemClickListener onItemClickListener;
 
-	public interface OnItemClickListener {
-		void onUserItemClicked(UserModel userModel);
-	}
+    public UsersAdapter(Context context, Collection<UserModel> usersCollection) {
+        this.validateUsersCollection(usersCollection);
+        this.layoutInflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.usersCollection = (List<UserModel>) usersCollection;
+    }
 
-	private List<UserModel> usersCollection;
-	private final LayoutInflater layoutInflater;
+    @Override
+    public int getItemCount() {
+        return (this.usersCollection != null) ? this.usersCollection.size() : 0;
+    }
 
-	private OnItemClickListener onItemClickListener;
+    @Override
+    public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        rowUserBinding = DataBindingUtil.inflate(layoutInflater, R.layout.row_user, parent, false);
+        UserViewHolder userViewHolder = new UserViewHolder(rowUserBinding);
+        return userViewHolder;
+    }
 
-	public UsersAdapter(Context context, Collection<UserModel> usersCollection) {
-		this.validateUsersCollection(usersCollection);
-		this.layoutInflater =
-				(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.usersCollection = (List<UserModel>) usersCollection;
-	}
+    @Override
+    public void onBindViewHolder(UserViewHolder holder, final int position) {
+        final UserModel userModel = this.usersCollection.get(position);
+        holder.textViewTitle.setText(userModel.getFullName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UsersAdapter.this.onItemClickListener != null) {
+                    UsersAdapter.this.onItemClickListener.onUserItemClicked(userModel);
+                }
+            }
+        });
+    }
 
-	@Override
-	public int getItemCount() {
-		return (this.usersCollection != null) ? this.usersCollection.size() : 0;
-	}
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-	@Override
-	public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		rowUserBinding = DataBindingUtil.inflate(layoutInflater, R.layout.row_user, parent, false);
-		UserViewHolder userViewHolder = new UserViewHolder(rowUserBinding);
-		return userViewHolder;
-	}
+    public void setUsersCollection(List<UserModel> usersCollection) {
+        this.validateUsersCollection(usersCollection);
+        this.usersCollection = (List<UserModel>) usersCollection;
+        this.notifyDataSetChanged();
+    }
 
-	@Override
-	public void onBindViewHolder(UserViewHolder holder, final int position) {
-		final UserModel userModel = this.usersCollection.get(position);
-		holder.textViewTitle.setText(userModel.getFullName());
-		holder.itemView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (UsersAdapter.this.onItemClickListener != null) {
-					UsersAdapter.this.onItemClickListener.onUserItemClicked(userModel);
-				}
-			}
-		});
-	}
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
+    private void validateUsersCollection(Collection<UserModel> usersCollection) {
+        if (usersCollection == null) {
+            throw new IllegalArgumentException("The list cannot be null");
+        }
+    }
 
-	public void setUsersCollection(List<UserModel> usersCollection) {
-		this.validateUsersCollection(usersCollection);
-		this.usersCollection = (List<UserModel>) usersCollection;
-		this.notifyDataSetChanged();
-	}
+    public interface OnItemClickListener {
+        void onUserItemClicked(UserModel userModel);
+    }
 
-	public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-		this.onItemClickListener = onItemClickListener;
-	}
+    static class UserViewHolder extends RecyclerView.ViewHolder {
+        TextView textViewTitle;
 
-	private void validateUsersCollection(Collection<UserModel> usersCollection) {
-		if (usersCollection == null) {
-			throw new IllegalArgumentException("The list cannot be null");
-		}
-	}
-
-	static class UserViewHolder extends RecyclerView.ViewHolder {
-		TextView textViewTitle;
-
-		public UserViewHolder(RowUserBinding rowUserBinding) {
-			super(rowUserBinding.getRoot());
-			textViewTitle = rowUserBinding.title;
-		}
-	}
+        public UserViewHolder(RowUserBinding rowUserBinding) {
+            super(rowUserBinding.getRoot());
+            textViewTitle = rowUserBinding.title;
+        }
+    }
 }

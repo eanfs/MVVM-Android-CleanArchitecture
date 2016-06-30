@@ -28,47 +28,47 @@ import com.fernandocejas.android10.sample.data.net.RestApiImpl;
  */
 public class UserDataStoreFactory {
 
-	private final Context context ;
-	private UserCache userCache;
+    private final Context context;
+    private UserCache userCache;
 
-	public UserDataStoreFactory(Context applicationContext) {
-		this(applicationContext, new UserCacheImpl(applicationContext));
-	}
+    public UserDataStoreFactory(Context applicationContext) {
+        this(applicationContext, new UserCacheImpl(applicationContext));
+    }
 
-	public UserDataStoreFactory(Context context, UserCache userCache) {
-		if (context == null || userCache == null) {
-			throw new IllegalArgumentException("Constructor parameters cannot be null!!!");
-		}
-		this.context = context.getApplicationContext();
-		this.userCache = userCache;
-	}
+    public UserDataStoreFactory(Context context, UserCache userCache) {
+        if (context == null || userCache == null) {
+            throw new IllegalArgumentException("Constructor parameters cannot be null!!!");
+        }
+        this.context = context.getApplicationContext();
+        this.userCache = userCache;
+    }
 
-	public void setUserCache(UserCache userCache) {
-		this.userCache = userCache;
-	}
+    public void setUserCache(UserCache userCache) {
+        this.userCache = userCache;
+    }
 
-	/**
-	 * Create {@link UserDataStore} from a user id.
-	 */
-	public UserDataStore create(int userId) {
-		UserDataStore userDataStore;
+    /**
+     * Create {@link UserDataStore} from a user id.
+     */
+    public UserDataStore create(int userId) {
+        UserDataStore userDataStore;
 
-		if (!this.userCache.isExpired() && this.userCache.isCached(userId)) {
-			userDataStore = new DiskUserDataStore(this.userCache);
-		} else {
-			userDataStore = createCloudDataStore();
-		}
+        if (!this.userCache.isExpired() && this.userCache.isCached(userId)) {
+            userDataStore = new DiskUserDataStore(this.userCache);
+        } else {
+            userDataStore = createCloudDataStore();
+        }
 
-		return userDataStore;
-	}
+        return userDataStore;
+    }
 
-	/**
-	 * Create {@link UserDataStore} to retrieve data from the Cloud.
-	 */
-	public UserDataStore createCloudDataStore() {
-		UserEntityJsonMapper userEntityJsonMapper = new UserEntityJsonMapper();
-		RestApi restApi = new RestApiImpl(this.context, userEntityJsonMapper);
+    /**
+     * Create {@link UserDataStore} to retrieve data from the Cloud.
+     */
+    public UserDataStore createCloudDataStore() {
+        UserEntityJsonMapper userEntityJsonMapper = new UserEntityJsonMapper();
+        RestApi restApi = new RestApiImpl(this.context, userEntityJsonMapper);
 
-		return new CloudUserDataStore(restApi, this.userCache);
-	}
+        return new CloudUserDataStore(restApi, this.userCache);
+    }
 }
